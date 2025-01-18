@@ -79,7 +79,7 @@ fun QuizBar(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
-                "Questions Left: $noOfQuestions",
+                "Questions: $noOfQuestions",
                 modifier = modifier.padding(start = Dimensions.TenDP)
             )
             Text(

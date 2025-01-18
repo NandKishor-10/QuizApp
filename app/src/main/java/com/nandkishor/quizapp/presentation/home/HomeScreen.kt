@@ -17,9 +17,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import com.nandkishor.quizapp.presentation.common.Dimensions
-import com.nandkishor.quizapp.presentation.main_activity.ElevatedNextButton
 import com.nandkishor.quizapp.presentation.common.Lists
 import com.nandkishor.quizapp.presentation.home.components.DropdownMenu
+import com.nandkishor.quizapp.presentation.home.components.ElevatedNextButton
 import com.nandkishor.quizapp.presentation.home.components.HeaderBar
 
 @Composable

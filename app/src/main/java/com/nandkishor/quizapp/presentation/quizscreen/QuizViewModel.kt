@@ -50,9 +50,6 @@ class QuizViewModel @Inject constructor(
                         _quizList.value = StateQuizScreen(isLoading = true)
                     }
                     is Resource.Success -> {
-//                        for (quiz: Result in resource.data) {
-//                            Log.d("quiz", quiz.toString())
-//                        }
                         val listOfQuizState: List<QuizState> = getListOfQuizState(resource.data)
                         _quizList.value = StateQuizScreen(quizState = listOfQuizState)
                     }
