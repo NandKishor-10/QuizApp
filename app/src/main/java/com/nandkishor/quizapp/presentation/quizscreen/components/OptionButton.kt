@@ -10,22 +10,18 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.semantics.Role
-import androidx.compose.ui.tooling.preview.Preview
 import com.nandkishor.quizapp.presentation.common.Dimensions
 
 @Composable
 fun OptionButton(
     option: String,
-    selectedOption: String,
-    onOptionSelected: (String) -> Unit,
+    selected: Boolean,
+    onOptionSelected: () -> Unit,
+    onOptionUnselected: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Row (
@@ -34,21 +30,21 @@ fun OptionButton(
             .padding(Dimensions.FiveDP)
             .clip(MaterialTheme.shapes.medium)
             .border(
-                width = Dimensions.OneDP,
-                color = if (option == selectedOption) MaterialTheme.colorScheme.primary
-                        else MaterialTheme.colorScheme.secondary,
+                width = if (!selected) Dimensions.OneDP else Dimensions.TwoDP,
+                color = if (!selected) MaterialTheme.colorScheme.secondary
+                else MaterialTheme.colorScheme.primary,
                 shape = MaterialTheme.shapes.medium
             )
             .selectable(
-                selected = (option == selectedOption),
-                onClick = { onOptionSelected(option) },
+                selected = !selected,
+                onClick = { if (!selected) onOptionSelected() else onOptionUnselected() },
                 role = Role.RadioButton
             )
             .padding(Dimensions.TenDP),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         RadioButton(
-            selected = ( option == selectedOption ),
+            selected = selected,
             onClick = null
         )
         Spacer(modifier = modifier.padding(Dimensions.FiveDP))
@@ -56,13 +52,13 @@ fun OptionButton(
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-private fun OptionButtonPrev() {
-    var selectedOption by remember{ mutableStateOf("")}
-    OptionButton(
-        option = "Option",
-        selectedOption = selectedOption,
-        onOptionSelected = { selectedOption = it}
-    )
-}
+//@Preview(showBackground = true)
+//@Composable
+//private fun OptionButtonPrev() {
+//    var selectedOption by remember{ mutableStateOf("")}
+//    OptionButton(
+//        option = "Option",
+//        selectedOption = selectedOption,
+//        selected = false,
+//    )
+//}

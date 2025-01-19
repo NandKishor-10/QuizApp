@@ -4,6 +4,7 @@ import androidx.compose.ui.unit.dp
 
 object Dimensions {
     val OneDP = 1.dp
+    val TwoDP = 2.dp
     val FiveDP = 5.dp
     val TenDP = 10.dp
     val TwentyFiveDP = 25.dp

@@ -13,10 +13,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import com.nandkishor.quizapp.presentation.common.Dimensions
 import com.nandkishor.quizapp.presentation.quizscreen.components.OptionButton
@@ -25,16 +21,17 @@ import com.nandkishor.quizapp.presentation.quizscreen.components.OptionButton
 fun QuizInterface(
     qNumber: Int,
     quizState: QuizState,
+    onOptionSelected: (Int) -> Unit,
+    onOptionUnselected: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val question = characterCodeDecoder(quizState.quiz?.question!!)
     val options = quizState.shuffledOptions?.map {option -> characterCodeDecoder(option)}
-    var selectedOption by remember { mutableStateOf("") }
+
     Box(
         modifier = modifier
             .fillMaxSize(1f)
             .padding(Dimensions.TenDP)
-//            .padding(top = Dimensions.FiftyDP)
             .selectableGroup(),
     ) {
         Column (
@@ -47,11 +44,12 @@ fun QuizInterface(
                 Text(text = question, style = MaterialTheme.typography.headlineSmall)
             }
             Spacer(modifier = modifier.padding(vertical = Dimensions.TenDP))
-            options?.forEach { option ->
+            options?.forEachIndexed { index,option ->
                 OptionButton(
                     option = option,
-                    selectedOption = selectedOption,
-                    onOptionSelected = { selectedOption = it }
+                    selected = quizState.selectedOptions == index,
+                    onOptionSelected = { onOptionSelected(index)},
+                    onOptionUnselected = { onOptionUnselected(index) }
                 )
             }
         }

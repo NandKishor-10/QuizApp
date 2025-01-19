@@ -75,11 +75,19 @@ fun QuizScreen(
             ) { index ->
                 QuizInterface(
                     qNumber = index + 1,
-                    quizState = state.quizState[index]
+                    quizState = state.quizState[index],
+                    onOptionSelected = { selectedIndex ->
+                        event(EventQuizScreen.SetSelectedOption(index, selectedIndex))
+                    },
+                    onOptionUnselected = {
+                        event(EventQuizScreen.SetSelectedOption(index, -1))
+                    }
                 )
             }
             PreviousAndNextButtons(
-                pagerState = pagerState, noOfQuestions = noOfQuestions
+                pagerState = pagerState,
+                noOfQuestions = noOfQuestions,
+                state = state
             )
         }
     }

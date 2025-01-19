@@ -1,5 +1,6 @@
 package com.nandkishor.quizapp.presentation.quizscreen.components
 
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Row
@@ -24,6 +25,7 @@ import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import com.nandkishor.quizapp.presentation.common.Dimensions
+import com.nandkishor.quizapp.presentation.quizscreen.StateQuizScreen
 import com.nandkishor.quizapp.ui.theme.Green
 import kotlinx.coroutines.launch
 
@@ -31,6 +33,7 @@ import kotlinx.coroutines.launch
 fun PreviousAndNextButtons(
     pagerState: PagerState,
     noOfQuestions: Int,
+    state: StateQuizScreen,
     modifier: Modifier = Modifier,
 ) {
     Row(
@@ -49,12 +52,7 @@ fun PreviousAndNextButtons(
                 ) }
             },
             modifier = modifier.weight(1f),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = if (pagerState.currentPage != 0) MaterialTheme.colorScheme.primary
-                else MaterialTheme.colorScheme.secondary,
-                contentColor = if (pagerState.currentPage != 0) MaterialTheme.colorScheme.onPrimary
-                else MaterialTheme.colorScheme.onSecondary
-            )
+            enabled = pagerState.currentPage != 0
         ) {
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
@@ -65,8 +63,10 @@ fun PreviousAndNextButtons(
         Spacer(modifier = modifier.weight(.2f))
         val context = LocalContext.current
         Button(onClick = {
-            if (pagerState.currentPage == noOfQuestions - 1) Toast.makeText(context, "Quiz Ends here",
-                Toast.LENGTH_SHORT).show()
+            if (pagerState.currentPage == noOfQuestions - 1) {
+                Toast.makeText(context, "Quiz Ends here", Toast.LENGTH_SHORT).show()
+                Log.d("submit", state.score.toString())
+            }
             else coroutineScope.launch{ pagerState.animateScrollToPage(
                 pagerState.currentPage + 1,
                 animationSpec = tween(delayMillis = 500)
@@ -76,7 +76,8 @@ fun PreviousAndNextButtons(
             colors = ButtonDefaults.buttonColors(
                 containerColor = if (pagerState.currentPage != noOfQuestions -1) MaterialTheme.colorScheme.primary
                 else Green,
-                contentColor = White
+                contentColor = if (pagerState.currentPage != noOfQuestions -1) MaterialTheme.colorScheme.onPrimary
+                else White
             )
         ) {
             Text(text = if (pagerState.currentPage != noOfQuestions - 1) "Next" else "Submit", textAlign = TextAlign.Center)
@@ -94,8 +95,8 @@ fun PreviousAndNextButtons(
 //@Composable
 //private fun Prev() {
 //    PreviousAndNextButtons(
-//        pagerState = TODO(),
+//        pagerState = //,
 //        noOfQuestions = 10,
-//        modifier = TODO()
+//        modifier = //
 //    )
 //}
