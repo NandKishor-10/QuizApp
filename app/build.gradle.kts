@@ -78,4 +78,6 @@ dependencies {
     implementation (libs.accompanist.systemuicontroller)
     implementation (libs.lottie.compose)
 
+    implementation(libs.androidx.constraintlayout.compose.android)
+
 }

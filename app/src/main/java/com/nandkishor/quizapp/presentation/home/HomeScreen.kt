@@ -24,7 +24,7 @@ import com.nandkishor.quizapp.presentation.home.components.HeaderBar
 
 @Composable
 fun HomeScreen(navController: NavController, modifier: Modifier = Modifier) {
-    var noOfQuestions by remember { mutableStateOf("") }
+    var noOfQuestions by remember { mutableStateOf("10") }
     var category by remember { mutableStateOf("") }
     var difficulty by remember { mutableStateOf("") }
     var type by remember { mutableStateOf("") }
@@ -41,13 +41,13 @@ fun HomeScreen(navController: NavController, modifier: Modifier = Modifier) {
                 .verticalScroll(rememberScrollState())
         ) {
             Spacer(modifier = modifier.padding(Dimensions.TwentyFiveDP ))
-            DropdownMenu(label = "Number of Questions", isNecessary = true, lists = Lists.amounts, onDropdownClick = {noOfQuestions = it})
+            DropdownMenu(label = "Number of Questions", defaultValue = noOfQuestions, isNecessary = true, lists = Lists.amounts, onDropdownClick = {noOfQuestions = it})
             Spacer(modifier = modifier.padding(Dimensions.TwentyFiveDP ))
             DropdownMenu(label = "Select Category", lists = Lists.categories.map{it.first}, onDropdownClick = {category = it})
             Spacer(modifier = modifier.padding(Dimensions.TwentyFiveDP ))
             DropdownMenu(label = "Select Difficulty", lists = Lists.difficulties, onDropdownClick = {difficulty = it})
             Spacer(modifier = modifier.padding(Dimensions.TwentyFiveDP ))
-            DropdownMenu(label = "Select Type", isNecessary = true, lists = Lists.type, onDropdownClick = {type = it})
+            DropdownMenu(label = "Select Type", lists = Lists.type, onDropdownClick = {type = it})
         }
         Box(modifier = modifier
             .fillMaxSize()
@@ -55,7 +55,6 @@ fun HomeScreen(navController: NavController, modifier: Modifier = Modifier) {
             contentAlignment = Alignment.BottomCenter
         ) {
             ElevatedNextButton(
-                buttonText = "Generate Quiz  ",
                 noOfQuestions = noOfQuestions,
                 category = category,
                 difficulty = difficulty,

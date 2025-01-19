@@ -34,11 +34,12 @@ import com.nandkishor.quizapp.presentation.common.Dimensions
 @Composable
 fun DropdownMenu(
     label: String = "label",
+    defaultValue: String = "",
     isNecessary: Boolean = false,
     lists: List<String>,
     onDropdownClick: (String) -> Unit
 ) {
-    var selectedItem by remember { mutableStateOf("") }
+    var selectedItem by remember { mutableStateOf(defaultValue) }
     var expanded by remember { mutableStateOf(false) }
 
     ExposedDropdownMenuBox(

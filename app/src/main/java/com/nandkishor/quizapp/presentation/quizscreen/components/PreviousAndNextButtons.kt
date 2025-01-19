@@ -1,21 +1,16 @@
 package com.nandkishor.quizapp.presentation.quizscreen.components
 
-import android.provider.CalendarContract
 import android.widget.Toast
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.background
-import androidx.compose.foundation.gestures.animateScrollBy
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
+import androidx.compose.material.icons.filled.Done
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -25,15 +20,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.text.style.TextAlign
 import com.nandkishor.quizapp.presentation.common.Dimensions
 import com.nandkishor.quizapp.ui.theme.Green
-import com.nandkishor.quizapp.ui.theme.Indigo
-import com.nandkishor.quizapp.ui.theme.Purple40
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
@@ -69,7 +60,7 @@ fun PreviousAndNextButtons(
                 imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
                 contentDescription = null
             )
-            Text(text = "Previous")
+            Text(text = "Previous", textAlign = TextAlign.Center)
         }
         Spacer(modifier = modifier.weight(.2f))
         val context = LocalContext.current
@@ -83,15 +74,15 @@ fun PreviousAndNextButtons(
             },
             modifier = modifier.weight(1f),
             colors = ButtonDefaults.buttonColors(
-                containerColor = if (pagerState.currentPage != noOfQuestions -1) MaterialTheme.colorScheme.inversePrimary
+                containerColor = if (pagerState.currentPage != noOfQuestions -1) MaterialTheme.colorScheme.primary
                 else Green,
-                contentColor = Color.White
+                contentColor = White
             )
         ) {
-            Text(text = if (pagerState.currentPage == noOfQuestions - 1) "Submit"
-                else "Next")
+            Text(text = if (pagerState.currentPage != noOfQuestions - 1) "Next" else "Submit", textAlign = TextAlign.Center)
             Icon(
-                imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
+                imageVector = if (pagerState.currentPage != noOfQuestions - 1) Icons.AutoMirrored.Filled.KeyboardArrowRight
+                else Icons.Default.Done,
                 contentDescription = null
             )
         }
