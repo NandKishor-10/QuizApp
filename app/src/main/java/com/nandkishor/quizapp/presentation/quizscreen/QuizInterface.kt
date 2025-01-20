@@ -56,6 +56,7 @@ fun QuizInterface(
     }
 }
 
+
 fun characterCodeDecoder(input: String) =
     Html.fromHtml(input, Html.FROM_HTML_MODE_LEGACY).toString()
 

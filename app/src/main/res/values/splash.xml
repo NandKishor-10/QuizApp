@@ -3,6 +3,6 @@
      <style name="App.Starting.Theme" parent="Theme.SplashScreen">
          <item name="windowSplashScreenBackground"> @color/splash_background </item>
          <item name="windowSplashScreenAnimatedIcon">@drawable/vector_icon </item>
-         <item name="postSplashScreenTheme">@style/Theme.QuizApp</item>
+         <item name="postSplashScreenTheme">@style/Theme.QuizApp </item>
      </style>
 </resources>

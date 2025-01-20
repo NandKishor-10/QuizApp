@@ -31,7 +31,7 @@ import com.nandkishor.quizapp.presentation.common.Dimensions
 @Composable
 fun QuizBar(
     category: String,
-    noOfQuestions: Int?,
+    noOfQuestions: Int,
     difficulty: String,
     navController: NavController,
     modifier: Modifier = Modifier,
@@ -54,7 +54,7 @@ fun QuizBar(
             ),
             title = {
                 Text(
-                    text = category,
+                    text = if (category.isNotBlank()) category else "Any Category",
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                     style = MaterialTheme.typography.headlineSmall,
@@ -83,7 +83,7 @@ fun QuizBar(
                 modifier = modifier.padding(start = Dimensions.TenDP)
             )
             Text(
-                "Difficulty: $difficulty",
+                "Difficulty: ${if (difficulty.isNotBlank()) difficulty else "Mixed"}",
                 modifier = modifier.padding(end = Dimensions.TenDP)
             )
         }
@@ -98,7 +98,7 @@ private fun Preview() {
     QuizBar(
         category = "Science & Tech",
         noOfQuestions = 10,
-        difficulty = "Easy",
+        difficulty = "",
         navController = rememberNavController()
     )
 }

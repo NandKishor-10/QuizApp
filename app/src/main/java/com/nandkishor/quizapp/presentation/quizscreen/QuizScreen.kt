@@ -1,21 +1,23 @@
 package com.nandkishor.quizapp.presentation.quizscreen
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import com.nandkishor.quizapp.presentation.common.Dimensions
 import com.nandkishor.quizapp.presentation.common.Lists.categories
+import com.nandkishor.quizapp.presentation.common.SecureScreen
 import com.nandkishor.quizapp.presentation.quizscreen.components.PreviousAndNextButtons
 import com.nandkishor.quizapp.presentation.quizscreen.components.QuizBar
 
@@ -30,7 +32,10 @@ fun QuizScreen(
     navController: NavController,
     modifier: Modifier = Modifier
 ) {
-    LaunchedEffect (key1 = Unit) {
+    var noOfOptions by remember{ mutableIntStateOf(0) }
+
+    LaunchedEffect (Unit) {
+        noOfOptions = if (type == "Multiple Choice") 4 else 2
         val difficultyModified = when(difficulty) {
             "Hard" -> "hard"
             "Medium" -> "medium"
@@ -51,39 +56,39 @@ fun QuizScreen(
     Scaffold(
         modifier = modifier.fillMaxSize(),
         topBar = {
-            Column{
-                QuizBar(
-                    category = if ("" == category) "Any Category"
-                    else category.toString(),
-                    noOfQuestions = noOfQuestions,
-                    difficulty = if ("" == difficulty) "Mixed"
-                    else difficulty.toString(),
-                    navController = navController
-                )
-            }
+            QuizBar(
+                category = category.toString(),
+                noOfQuestions = noOfQuestions,
+                difficulty = difficulty.toString(),
+                navController = navController
+            )
         }
     ) { innerPadding ->
-        if (quizFetched(state = state, innerPadding = innerPadding)) {
+        if (quizFetched(state = state, noOfOptions = noOfOptions, innerPadding = innerPadding)) {
             val pagerState = rememberPagerState { state.quizState.size }
 
-            HorizontalPager(
-                state = pagerState,
-                modifier = modifier.fillMaxSize()
-                    .padding(innerPadding)
-                    .padding(top = Dimensions.TenDP),
-                verticalAlignment = Alignment.CenterVertically
-            ) { index ->
-                QuizInterface(
-                    qNumber = index + 1,
-                    quizState = state.quizState[index],
-                    onOptionSelected = { selectedIndex ->
-                        event(EventQuizScreen.SetSelectedOption(index, selectedIndex))
-                    },
-                    onOptionUnselected = {
-                        event(EventQuizScreen.SetSelectedOption(index, -1))
-                    }
-                )
+            SecureScreen {
+                HorizontalPager(
+                    state = pagerState,
+                    modifier = modifier
+                        .fillMaxSize()
+                        .padding(innerPadding)
+                        .padding(top = Dimensions.TenDP),
+                    verticalAlignment = Alignment.CenterVertically
+                ) { index ->
+                    QuizInterface(
+                        qNumber = index + 1,
+                        quizState = state.quizState[index],
+                        onOptionSelected = { selectedIndex ->
+                            event(EventQuizScreen.SetSelectedOption(index, selectedIndex))
+                        },
+                        onOptionUnselected = {
+                            event(EventQuizScreen.SetSelectedOption(index, -1))
+                        }
+                    )
+                }
             }
+
             PreviousAndNextButtons(
                 pagerState = pagerState,
                 noOfQuestions = noOfQuestions,
@@ -94,29 +99,21 @@ fun QuizScreen(
 }
 
 @Composable
-fun quizFetched(state: StateQuizScreen, innerPadding: PaddingValues): Boolean {
+fun quizFetched(state: StateQuizScreen, noOfOptions: Int, innerPadding: PaddingValues): Boolean {
     return when {
         state.isLoading -> {
-            ShimmerQuizInterface(innerPadding = innerPadding)
+            ShimmerQuizInterface(noOfOptions, innerPadding)
             false
         }
         state.quizState.isNotEmpty() == true -> {
             true
         }
+        state.error.isNotEmpty() -> {
+            ErrorScreen(state.error, innerPadding)
+            false
+        }
         else -> {
-            Text(text = state.error, color = MaterialTheme.colorScheme.error)
             false
         }
     }
 }
-
-//@Preview(showBackground = true, showSystemUi = true)
-//@Composable
-//private fun Prev() {
-//    QuizScreen(
-//        "Science & Tech",
-//        10,
-//        "Hard",
-//        "multiChoice"
-//    )
-//}

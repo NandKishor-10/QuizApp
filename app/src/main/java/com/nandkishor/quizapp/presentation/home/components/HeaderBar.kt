@@ -19,11 +19,13 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.nandkishor.quizapp.presentation.common.Dimensions
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HeaderBar(modifier: Modifier = Modifier) {
+
     val context = LocalContext.current
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     CenterAlignedTopAppBar(

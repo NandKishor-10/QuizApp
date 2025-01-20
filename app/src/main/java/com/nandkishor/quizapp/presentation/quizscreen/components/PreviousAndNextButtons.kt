@@ -48,7 +48,7 @@ fun PreviousAndNextButtons(
             onClick = {
                 coroutineScope.launch{ pagerState.animateScrollToPage(
                     pagerState.currentPage - 1,
-                    animationSpec = tween(delayMillis = 500)
+                    animationSpec = tween(delayMillis = 250)
                 ) }
             },
             modifier = modifier.weight(1f),
@@ -69,7 +69,7 @@ fun PreviousAndNextButtons(
             }
             else coroutineScope.launch{ pagerState.animateScrollToPage(
                 pagerState.currentPage + 1,
-                animationSpec = tween(delayMillis = 500)
+                animationSpec = tween(delayMillis = 250)
             ) }
             },
             modifier = modifier.weight(1f),

@@ -55,10 +55,12 @@ fun Modifier.shimmerEffect(): Modifier = composed {
 }
 
 @Composable
-fun ShimmerQuizInterface(innerPadding: PaddingValues) {
+fun ShimmerQuizInterface(noOfOptions: Int, innerPadding: PaddingValues) {
     Column(
-        modifier = Modifier.padding(innerPadding)
-            .padding(top = Dimensions.TenDP),
+        modifier = Modifier
+            .padding(innerPadding)
+            .padding(top = Dimensions.TenDP)
+            .padding(Dimensions.TenDP),
         verticalArrangement = Arrangement.Center
     ) {
         // Simulated question text
@@ -73,7 +75,7 @@ fun ShimmerQuizInterface(innerPadding: PaddingValues) {
         Spacer(modifier = Modifier.height(16.dp))
 
         // Simulated answer options
-        repeat(4) {
+        repeat(noOfOptions) {
             Box(
                 modifier = Modifier
                     .height(50.dp)
