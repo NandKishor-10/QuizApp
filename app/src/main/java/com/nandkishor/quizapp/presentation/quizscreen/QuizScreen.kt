@@ -1,5 +1,6 @@
 package com.nandkishor.quizapp.presentation.quizscreen
 
+import android.util.Log
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -18,6 +19,8 @@ import androidx.navigation.NavController
 import com.nandkishor.quizapp.presentation.common.Dimensions
 import com.nandkishor.quizapp.presentation.common.Lists.categories
 import com.nandkishor.quizapp.presentation.common.SecureScreen
+import com.nandkishor.quizapp.presentation.otherscreens.ErrorScreen
+import com.nandkishor.quizapp.presentation.otherscreens.ShimmerQuizInterface
 import com.nandkishor.quizapp.presentation.quizscreen.components.PreviousAndNextButtons
 import com.nandkishor.quizapp.presentation.quizscreen.components.QuizBar
 
@@ -28,7 +31,7 @@ fun QuizScreen(
     difficulty: String?,
     type: String?,
     event: (EventQuizScreen) -> Unit,
-    state: StateQuizScreen,
+    state: QuizScreenState,
     navController: NavController,
     modifier: Modifier = Modifier
 ) {
@@ -81,6 +84,10 @@ fun QuizScreen(
                         quizState = state.quizState[index],
                         onOptionSelected = { selectedIndex ->
                             event(EventQuizScreen.SetSelectedOption(index, selectedIndex))
+
+                            state.userAnswers[index] =
+                                state.quizState[index].shuffledOptions?.get(selectedIndex) ?: ""
+                            Log.d("userAnswers", "${state.userAnswers}")
                         },
                         onOptionUnselected = {
                             event(EventQuizScreen.SetSelectedOption(index, -1))
@@ -92,14 +99,15 @@ fun QuizScreen(
             PreviousAndNextButtons(
                 pagerState = pagerState,
                 noOfQuestions = noOfQuestions,
-                state = state
+                state = state,
+                navController = navController
             )
         }
     }
 }
 
 @Composable
-fun quizFetched(state: StateQuizScreen, noOfOptions: Int, innerPadding: PaddingValues): Boolean {
+fun quizFetched(state: QuizScreenState, noOfOptions: Int, innerPadding: PaddingValues): Boolean {
     return when {
         state.isLoading -> {
             ShimmerQuizInterface(noOfOptions, innerPadding)

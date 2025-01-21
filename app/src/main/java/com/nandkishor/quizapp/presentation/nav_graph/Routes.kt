@@ -14,7 +14,8 @@ data class QuizScreen(
     val type: String?
 )
 
-//@Serializable
-//data class ScoreScreen(
-//    val score: Int
-//)
+@Serializable
+data class ScoreScreen(
+    val score: Int,
+    val noOfQuestions: Int
+)

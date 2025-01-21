@@ -16,7 +16,7 @@ class QuizViewModel @Inject constructor(
     private val getQuizzesUseCases: GetQuizzesUseCases
 ): ViewModel() {
 
-    private val _quizList = MutableStateFlow(StateQuizScreen())
+    private val _quizList = MutableStateFlow(QuizScreenState())
     val quizList = _quizList
 
     fun onEvent(event: EventQuizScreen) {
@@ -34,7 +34,7 @@ class QuizViewModel @Inject constructor(
                 updateQuizStateList(event.quizStateIndex, event.selectedOption)
             }
 
-            else -> {}
+            else -> {  }
         }
     }
 
@@ -55,6 +55,9 @@ class QuizViewModel @Inject constructor(
         }
         if (correctAnswer == selectedAnswer) {
             _quizList.value = _quizList.value.copy(score = previousScore + 1)
+            Log.d("score VM", "${previousScore + 1}")
+        } else {
+            Log.d("score VM", "${previousScore - 1}")
         }
         Log.d("answer", "$correctAnswer -> $selectedAnswer ${_quizList.value.score}")
     }
@@ -74,14 +77,14 @@ class QuizViewModel @Inject constructor(
             ).collect{ resource ->
                 when(resource) {
                     is Resource.Loading -> {
-                        _quizList.value = StateQuizScreen(isLoading = true)
+                        _quizList.value = QuizScreenState(isLoading = true)
                     }
                     is Resource.Success -> {
                         val listOfQuizState: List<QuizState> = getListOfQuizState(resource.data)
-                        _quizList.value = StateQuizScreen(quizState = listOfQuizState)
+                        _quizList.value = QuizScreenState(quizState = listOfQuizState)
                     }
                     is Resource.Error -> {
-                        _quizList.value = StateQuizScreen(error = resource.message.toString())
+                        _quizList.value = QuizScreenState(error = resource.message.toString())
                     }
                     else -> {}
                 }

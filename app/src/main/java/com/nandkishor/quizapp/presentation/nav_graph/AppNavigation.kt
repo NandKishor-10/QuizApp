@@ -12,9 +12,10 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.nandkishor.quizapp.presentation.home.HomeScreen
+import com.nandkishor.quizapp.presentation.otherscreens.ScoreScreen
 import com.nandkishor.quizapp.presentation.quizscreen.QuizScreen
 import com.nandkishor.quizapp.presentation.quizscreen.QuizViewModel
-import com.nandkishor.quizapp.presentation.quizscreen.StateQuizScreen
+import com.nandkishor.quizapp.presentation.quizscreen.QuizScreenState
 
 @Composable
 fun AppNavigation() {
@@ -39,7 +40,7 @@ fun AppNavigation() {
             val args = it.toRoute<QuizScreen>()
 
             val quizViewModel: QuizViewModel = hiltViewModel()
-            val state: StateQuizScreen by quizViewModel.quizList.collectAsState()
+            val state: QuizScreenState by quizViewModel.quizList.collectAsState()
 
             QuizScreen(
                 noOfQuestions = args.noOfQuestions,
@@ -48,6 +49,16 @@ fun AppNavigation() {
                 type = args.type,
                 event = { quizViewModel.onEvent(it) },
                 state = state,
+                navController = navController
+            )
+        }
+
+        composable<ScoreScreen> {
+            val args = it.toRoute<ScoreScreen>()
+
+            ScoreScreen(
+                score = args.score,
+                totalQuestions = args.noOfQuestions,
                 navController = navController
             )
         }

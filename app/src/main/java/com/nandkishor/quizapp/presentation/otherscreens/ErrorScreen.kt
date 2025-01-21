@@ -1,4 +1,4 @@
-package com.nandkishor.quizapp.presentation.quizscreen
+package com.nandkishor.quizapp.presentation.otherscreens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -12,8 +12,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import com.nandkishor.quizapp.R.drawable.warning
+import com.nandkishor.quizapp.presentation.common.Dimensions
 
 @Composable
 fun ErrorScreen(
@@ -24,7 +24,8 @@ fun ErrorScreen(
     Column(
         modifier = modifier
             .fillMaxSize(1f)
-            .padding(innerPadding),
+            .padding(innerPadding)
+            .padding(Dimensions.TenDP),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceEvenly
     ) {
@@ -34,7 +35,7 @@ fun ErrorScreen(
         )
         Text(
             text = error,
-            fontSize = MaterialTheme.typography.headlineMedium.fontSize
+            style = MaterialTheme.typography.headlineMedium
         )
     }
 }
@@ -44,6 +45,6 @@ fun ErrorScreen(
 //private fun Prev() {
 //    ErrorScreen(
 //        error = "No Internet Connection",
-////        innerPadding =
+//        innerPadding = PaddingValues(24.dp)
 //    )
 //}
