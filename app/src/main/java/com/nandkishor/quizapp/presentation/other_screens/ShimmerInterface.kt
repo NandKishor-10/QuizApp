@@ -63,7 +63,6 @@ fun ShimmerQuizInterface(noOfOptions: Int, innerPadding: PaddingValues) {
             .padding(Dimensions.TenDP),
         verticalArrangement = Arrangement.Center
     ) {
-        // Simulated question text
         Box(
             modifier = Modifier
                 .height(24.dp)
@@ -74,7 +73,6 @@ fun ShimmerQuizInterface(noOfOptions: Int, innerPadding: PaddingValues) {
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Simulated answer options
         repeat(noOfOptions) {
             Box(
                 modifier = Modifier

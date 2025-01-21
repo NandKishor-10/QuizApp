@@ -15,8 +15,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.nandkishor.quizapp.R.drawable.warning
 import com.nandkishor.quizapp.presentation.common.Dimensions
 
@@ -49,11 +47,11 @@ fun ErrorScreen(
     }
 }
 
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-private fun Prev() {
-    ErrorScreen(
-        error = "Unable to resolve host \"opentdb.com\": No address associated with hostname",
-        innerPadding = PaddingValues(24.dp)
-    )
-}
+//@Preview(showBackground = true, showSystemUi = true)
+//@Composable
+//private fun Prev() {
+//    ErrorScreen(
+//        error = "Unable to resolve host \"opentdb.com\": No address associated with hostname",
+//        innerPadding = PaddingValues(24.dp)
+//    )
+//}
