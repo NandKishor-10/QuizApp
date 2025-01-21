@@ -1,11 +1,10 @@
-package com.nandkishor.quizapp.presentation.quizscreen
+package com.nandkishor.quizapp.presentation.quiz
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.nandkishor.quizapp.common.Resource
-import com.nandkishor.quizapp.domian.model.Result
-import com.nandkishor.quizapp.domian.usecases.GetQuizzesUseCases
+import com.nandkishor.quizapp.domian.Result
+import com.nandkishor.quizapp.domian.GetQuizzesUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
@@ -20,21 +19,16 @@ class QuizViewModel @Inject constructor(
     val quizList = _quizList
 
     fun onEvent(event: EventQuizScreen) {
-        when(event) {
-            is EventQuizScreen.GetQuizzes -> {
-                getQuizzes(
-                    noOfQuestion = event.noOfQuestion,
-                    category = event.category,
-                    difficulty = event.difficulty,
-                    type = event.type
-                )
-            }
-
-            is EventQuizScreen.SetSelectedOption -> {
-                updateQuizStateList(event.quizStateIndex, event.selectedOption)
-            }
-
-            else -> {  }
+        if (event is EventQuizScreen.GetQuizzes) {
+            getQuizzes(
+                noOfQuestion = event.noOfQuestion,
+                category = event.category,
+                difficulty = event.difficulty,
+                type = event.type
+            )
+        }
+        else if (event is EventQuizScreen.SetSelectedOption) {
+            updateQuizStateList(event.quizStateIndex, event.selectedOption)
         }
     }
 
@@ -42,24 +36,6 @@ class QuizViewModel @Inject constructor(
         val updatedQuizStateList = quizList.value.quizState.toMutableList()
         updatedQuizStateList[quizStateIndex] = updatedQuizStateList[quizStateIndex].copy(selectedOptions = selectedOption)
         _quizList.value = quizList.value.copy(quizState = updatedQuizStateList)
-
-        updateScore(_quizList.value.quizState[quizStateIndex])
-    }
-
-    private fun updateScore(quizState: QuizState) {
-        val correctAnswer = quizState.quiz?.correct_answer
-        val previousScore = _quizList.value.score
-
-        val selectedAnswer = quizState.selectedOptions.takeIf { it!! >= 0 }?.let {
-            characterCodeDecoder(quizState.shuffledOptions?.get(it) ?: "")
-        }
-        if (correctAnswer == selectedAnswer) {
-            _quizList.value = _quizList.value.copy(score = previousScore + 1)
-            Log.d("score VM", "${previousScore + 1}")
-        } else {
-            Log.d("score VM", "${previousScore - 1}")
-        }
-        Log.d("answer", "$correctAnswer -> $selectedAnswer ${_quizList.value.score}")
     }
 
     private fun getQuizzes(

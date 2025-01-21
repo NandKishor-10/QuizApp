@@ -1,6 +1,5 @@
 package com.nandkishor.quizapp.data.remote
 
-import com.nandkishor.quizapp.data.remote.dto.QuizResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 

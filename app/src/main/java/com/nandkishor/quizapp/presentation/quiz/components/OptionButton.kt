@@ -1,4 +1,4 @@
-package com.nandkishor.quizapp.presentation.quizscreen.components
+package com.nandkishor.quizapp.presentation.quiz.components
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Row

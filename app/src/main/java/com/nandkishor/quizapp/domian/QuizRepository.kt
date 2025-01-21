@@ -1,6 +1,4 @@
-package com.nandkishor.quizapp.domian.repository
-
-import com.nandkishor.quizapp.domian.model.Result
+package com.nandkishor.quizapp.domian
 
 interface QuizRepository {
     suspend fun getQuizzes(

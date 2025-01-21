@@ -1,8 +1,8 @@
 package com.nandkishor.quizapp.data.repository
 
 import com.nandkishor.quizapp.data.remote.QuizApi
-import com.nandkishor.quizapp.domian.model.Result
-import com.nandkishor.quizapp.domian.repository.QuizRepository
+import com.nandkishor.quizapp.domian.Result
+import com.nandkishor.quizapp.domian.QuizRepository
 
 class QuizRepositoryImpl(
     private val quizApi: QuizApi

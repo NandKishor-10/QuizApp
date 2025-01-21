@@ -1,4 +1,4 @@
-package com.nandkishor.quizapp.presentation.quizscreen
+package com.nandkishor.quizapp.presentation.quiz
 
 import android.text.Html
 import androidx.compose.foundation.layout.Box
@@ -15,7 +15,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.nandkishor.quizapp.presentation.common.Dimensions
-import com.nandkishor.quizapp.presentation.quizscreen.components.OptionButton
+import com.nandkishor.quizapp.presentation.quiz.components.OptionButton
 
 @Composable
 fun QuizInterface(

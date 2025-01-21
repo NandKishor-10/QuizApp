@@ -1,4 +1,4 @@
-package com.nandkishor.quizapp.domian.model
+package com.nandkishor.quizapp.domian
 
 data class Result(
     val category: String,

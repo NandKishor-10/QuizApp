@@ -1,6 +1,6 @@
-package com.nandkishor.quizapp.presentation.quizscreen
+package com.nandkishor.quizapp.presentation.quiz
 
-import com.nandkishor.quizapp.domian.model.Result
+import com.nandkishor.quizapp.domian.Result
 
 data class QuizScreenState (
     val isLoading: Boolean = false,

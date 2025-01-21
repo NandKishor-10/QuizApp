@@ -2,8 +2,8 @@ package com.nandkishor.quizapp.common
 
 import com.nandkishor.quizapp.data.remote.QuizApi
 import com.nandkishor.quizapp.data.repository.QuizRepositoryImpl
-import com.nandkishor.quizapp.domian.repository.QuizRepository
-import com.nandkishor.quizapp.domian.usecases.GetQuizzesUseCases
+import com.nandkishor.quizapp.domian.QuizRepository
+import com.nandkishor.quizapp.domian.GetQuizzesUseCases
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

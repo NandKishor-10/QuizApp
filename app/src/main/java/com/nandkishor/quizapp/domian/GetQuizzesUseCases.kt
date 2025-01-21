@@ -1,8 +1,6 @@
-package com.nandkishor.quizapp.domian.usecases
+package com.nandkishor.quizapp.domian
 
 import com.nandkishor.quizapp.common.Resource
-import com.nandkishor.quizapp.domian.model.Result
-import com.nandkishor.quizapp.domian.repository.QuizRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

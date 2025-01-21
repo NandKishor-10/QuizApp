@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -16,6 +17,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.nandkishor.quizapp.presentation.common.Dimensions
 import com.nandkishor.quizapp.presentation.common.Lists
 import com.nandkishor.quizapp.presentation.home.components.DropdownMenu
@@ -24,6 +26,15 @@ import com.nandkishor.quizapp.presentation.home.components.HeaderBar
 
 @Composable
 fun HomeScreen(navController: NavController, modifier: Modifier = Modifier) {
+
+    val systemUiController = rememberSystemUiController()
+    systemUiController.setStatusBarColor(
+        color = MaterialTheme.colorScheme.primaryContainer
+    )
+    systemUiController.setNavigationBarColor(
+        color = MaterialTheme.colorScheme.background
+    )
+
     var noOfQuestions by remember { mutableStateOf("10") }
     var category by remember { mutableStateOf("") }
     var difficulty by remember { mutableStateOf("") }

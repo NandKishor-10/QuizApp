@@ -1,7 +1,6 @@
-package com.nandkishor.quizapp.presentation.quizscreen.components
+package com.nandkishor.quizapp.presentation.quiz.components
 
 import android.util.Log
-import android.widget.Toast
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -18,20 +17,16 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color.Companion.White
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.navigation.NavController
 import com.nandkishor.quizapp.presentation.common.Dimensions
+import com.nandkishor.quizapp.presentation.nav_graph.HomeScreen
 import com.nandkishor.quizapp.presentation.nav_graph.ScoreScreen
-import com.nandkishor.quizapp.presentation.quizscreen.QuizScreenState
+import com.nandkishor.quizapp.presentation.quiz.QuizScreenState
 import com.nandkishor.quizapp.ui.theme.Green
 import kotlinx.coroutines.launch
 
@@ -43,9 +38,6 @@ fun PreviousAndNextButtons(
     navController: NavController,
     modifier: Modifier = Modifier,
 ) {
-
-    var score by remember { mutableIntStateOf(0) }
-
     Row(
         modifier = modifier
             .fillMaxSize()
@@ -71,21 +63,17 @@ fun PreviousAndNextButtons(
             Text(text = "Previous", textAlign = TextAlign.Center)
         }
         Spacer(modifier = modifier.weight(.2f))
-        val context = LocalContext.current
-        Button(onClick = {
-            if (pagerState.currentPage == noOfQuestions - 1) {
-                Toast.makeText(context, "Quiz Ends here", Toast.LENGTH_SHORT).show()
-//                Log.d("submit", state.score.toString())
-                score = onSubmit(state)
-                navController.navigate(ScoreScreen(score, noOfQuestions))
-//                {
-//                    popUpTo(ScoreScreen) {inclusive = true}
-//                }
-            }
-            else coroutineScope.launch{ pagerState.animateScrollToPage(
-                pagerState.currentPage + 1,
-                animationSpec = tween(delayMillis = 250)
-            ) }
+        Button(
+            onClick = {
+                if (pagerState.currentPage == noOfQuestions - 1) {
+                    navController.navigate(ScoreScreen(onSubmit(state), noOfQuestions)) {
+                        popUpTo(HomeScreen)
+                    }
+                }
+                else coroutineScope.launch { pagerState.animateScrollToPage(
+                    pagerState.currentPage + 1,
+                    animationSpec = tween(delayMillis = 250)
+                ) }
             },
             modifier = modifier.weight(1f),
             colors = ButtonDefaults.buttonColors(
@@ -105,7 +93,6 @@ fun PreviousAndNextButtons(
         Spacer(modifier = modifier.weight(.2f))
     }
 }
-
 fun onSubmit(state: QuizScreenState): Int {
     var score = 0
     for ((questionId, selectedOption) in state.userAnswers) {

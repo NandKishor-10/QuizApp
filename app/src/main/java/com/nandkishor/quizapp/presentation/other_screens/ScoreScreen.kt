@@ -1,4 +1,4 @@
-package com.nandkishor.quizapp.presentation.otherscreens
+package com.nandkishor.quizapp.presentation.other_screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -15,11 +15,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.navigation.NavController
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.nandkishor.quizapp.presentation.common.Dimensions
 import com.nandkishor.quizapp.presentation.nav_graph.HomeScreen
 
 @Composable
 fun ScoreScreen(score: Int, totalQuestions: Int, navController: NavController) {
+    val systemUiController = rememberSystemUiController()
+    systemUiController.setStatusBarColor(
+        color = MaterialTheme.colorScheme.background
+    )
+    systemUiController.setNavigationBarColor(
+        color = MaterialTheme.colorScheme.background
+    )
+
     val scoreMessage = when {
         score == totalQuestions -> "🎉 Perfect! You're a quiz master!"
         score >= totalQuestions / 2 -> "😊 Great job! Keep practicing!"

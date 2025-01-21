@@ -1,4 +1,4 @@
-package com.nandkishor.quizapp.presentation.quizscreen
+package com.nandkishor.quizapp.presentation.quiz
 
 sealed class EventQuizScreen{
     data class GetQuizzes(

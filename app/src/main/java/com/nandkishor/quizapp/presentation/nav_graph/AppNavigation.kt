@@ -1,6 +1,5 @@
 package com.nandkishor.quizapp.presentation.nav_graph
 
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -10,23 +9,14 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.nandkishor.quizapp.presentation.home.HomeScreen
-import com.nandkishor.quizapp.presentation.otherscreens.ScoreScreen
-import com.nandkishor.quizapp.presentation.quizscreen.QuizScreen
-import com.nandkishor.quizapp.presentation.quizscreen.QuizViewModel
-import com.nandkishor.quizapp.presentation.quizscreen.QuizScreenState
+import com.nandkishor.quizapp.presentation.other_screens.ScoreScreen
+import com.nandkishor.quizapp.presentation.quiz.QuizScreen
+import com.nandkishor.quizapp.presentation.quiz.QuizScreenState
+import com.nandkishor.quizapp.presentation.quiz.QuizViewModel
 
 @Composable
 fun AppNavigation() {
-    val systemUiController = rememberSystemUiController()
-    systemUiController.setStatusBarColor(
-        color = MaterialTheme.colorScheme.primaryContainer
-    )
-    systemUiController.setNavigationBarColor(
-        color = MaterialTheme.colorScheme.background
-    )
-
     val navController = rememberNavController()
     NavHost(
         navController = navController,
