@@ -1,13 +1,12 @@
-package com.nandkishor.quizapp.presentation.quiz
+package com.nandkishor.quizapp.presentation.state
 
-import com.nandkishor.quizapp.domian.Result
+import com.nandkishor.quizapp.data.remote.models.Result
 
 data class QuizScreenState (
     val isLoading: Boolean = false,
     val quizState: List<QuizState> = emptyList(),
     val error: String = "",
     val userAnswers: MutableMap<Int, String> = mutableMapOf(),
-    val score: Int = 0
 )
 
 data class QuizState (

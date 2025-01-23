@@ -16,7 +16,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.nandkishor.quizapp.presentation.common.Dimensions
 import com.nandkishor.quizapp.presentation.common.Lists
@@ -39,15 +41,16 @@ fun HomeScreen(navController: NavController, modifier: Modifier = Modifier) {
     var category by remember { mutableStateOf("") }
     var difficulty by remember { mutableStateOf("") }
     var type by remember { mutableStateOf("") }
+
     Scaffold (
         modifier = modifier.fillMaxSize(),
         topBar = { HeaderBar() },
-    ) { padding ->
+    ) { innerPadding ->
         Column (
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = modifier
                 .fillMaxSize()
-                .padding(padding)
+                .padding(innerPadding)
                 .padding(Dimensions.TwentyFiveDP)
                 .verticalScroll(rememberScrollState())
         ) {
@@ -76,8 +79,8 @@ fun HomeScreen(navController: NavController, modifier: Modifier = Modifier) {
     }
 }
 
-//@Preview(showBackground = true, showSystemUi = true)
-//@Composable
-//private fun HomeScreenPrev() {
-//    HomeScreen()
-//}
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+private fun HomeScreenPrev() {
+    HomeScreen(rememberNavController())
+}

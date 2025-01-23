@@ -5,7 +5,7 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
 
     id("kotlin-kapt")
-    id("com.google.dagger.hilt.android")
+//    id("com.google.dagger.hilt.android")
     id("kotlin-parcelize")
 }
 
@@ -63,21 +63,19 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
 
     implementation (libs.androidx.foundation)
-
     implementation(libs.androidx.core.splashscreen)
     implementation (libs.androidx.navigation.compose)
     implementation(libs.kotlinx.serialization.json)
-
-    implementation (libs.hilt.android)
-    kapt(libs.hilt.compiler)
-    implementation (libs.androidx.hilt.navigation.compose)
-
-    implementation (libs.retrofit)
-    implementation (libs.converter.gson)
-
     implementation (libs.accompanist.systemuicontroller)
-    implementation (libs.lottie.compose)
 
-    implementation(libs.androidx.constraintlayout.compose.android)
-    
+    implementation(libs.ktor.client.core)
+    implementation(libs.ktor.client.android)
+    implementation(libs.ktor.client.content.negotiation)
+    implementation(libs.ktor.serialization.kotlinx.json)
+    implementation(libs.ktor.client.logging)
+
+    implementation(libs.koin.core)
+    implementation(libs.koin.android)
+    implementation(libs.koin.androidx.compose)
+
 }

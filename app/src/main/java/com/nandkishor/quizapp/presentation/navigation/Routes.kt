@@ -1,4 +1,4 @@
-package com.nandkishor.quizapp.presentation.nav_graph
+package com.nandkishor.quizapp.presentation.navigation
 
 import kotlinx.serialization.Serializable
 

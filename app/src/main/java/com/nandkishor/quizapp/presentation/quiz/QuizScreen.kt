@@ -22,9 +22,10 @@ import com.nandkishor.quizapp.presentation.common.Dimensions
 import com.nandkishor.quizapp.presentation.common.Lists.categories
 import com.nandkishor.quizapp.presentation.common.SecureScreen
 import com.nandkishor.quizapp.presentation.other_screens.ErrorScreen
-import com.nandkishor.quizapp.presentation.other_screens.ShimmerQuizInterface
 import com.nandkishor.quizapp.presentation.quiz.components.PreviousAndNextButtons
 import com.nandkishor.quizapp.presentation.quiz.components.QuizBar
+import com.nandkishor.quizapp.presentation.state.EventQuizScreen
+import com.nandkishor.quizapp.presentation.state.QuizScreenState
 
 @Composable
 fun QuizScreen(
@@ -49,17 +50,20 @@ fun QuizScreen(
     var noOfOptions by remember{ mutableIntStateOf(0) }
 
     LaunchedEffect (Unit) {
-        noOfOptions = if (type == "Multiple Choice") 4 else 2
+        noOfOptions = if (type == "True/False") 2 else 4
         val difficultyModified = when(difficulty) {
             "Hard" -> "hard"
             "Medium" -> "medium"
-            else -> "easy"
+            "Easy" -> "easy"
+            else -> null
         }
         val typeModified = when(type) {
             "Multiple Choice" -> "multiple"
-            else -> "boolean"
+            "True/False" -> "boolean"
+            else -> null
         }
-        event(EventQuizScreen.GetQuizzes(
+        event(
+            EventQuizScreen.GetQuizzes(
             noOfQuestion = noOfQuestions,
             category = categories.toMap()[category],
             difficulty = difficultyModified,

@@ -1,10 +1,8 @@
-package com.nandkishor.quizapp.presentation.nav_graph
+package com.nandkishor.quizapp.presentation.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -12,8 +10,9 @@ import androidx.navigation.toRoute
 import com.nandkishor.quizapp.presentation.home.HomeScreen
 import com.nandkishor.quizapp.presentation.other_screens.ScoreScreen
 import com.nandkishor.quizapp.presentation.quiz.QuizScreen
-import com.nandkishor.quizapp.presentation.quiz.QuizScreenState
-import com.nandkishor.quizapp.presentation.quiz.QuizViewModel
+import com.nandkishor.quizapp.presentation.state.QuizScreenState
+import com.nandkishor.quizapp.presentation.viewmodel.QuizViewModel
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun AppNavigation() {
@@ -29,7 +28,8 @@ fun AppNavigation() {
         composable<QuizScreen> {
             val args = it.toRoute<QuizScreen>()
 
-            val quizViewModel: QuizViewModel = hiltViewModel()
+            // Use Koin to inject the ViewModel
+            val quizViewModel: QuizViewModel = koinViewModel()
             val state: QuizScreenState by quizViewModel.quizList.collectAsState()
 
             QuizScreen(
@@ -53,10 +53,4 @@ fun AppNavigation() {
             )
         }
     }
-}
-
-@Preview(showSystemUi = true)
-@Composable
-private fun NavigationPrev() {
-    AppNavigation()
 }

@@ -21,7 +21,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.nandkishor.quizapp.presentation.common.Dimensions
-import com.nandkishor.quizapp.presentation.nav_graph.QuizScreen
+import com.nandkishor.quizapp.presentation.navigation.QuizScreen
 
 @Composable
 fun ElevatedNextButton(

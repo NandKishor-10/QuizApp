@@ -1,4 +1,4 @@
-package com.nandkishor.quizapp.presentation.other_screens
+package com.nandkishor.quizapp.presentation.quiz
 
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode

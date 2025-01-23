@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -17,67 +18,71 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.navigation.NavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.nandkishor.quizapp.presentation.common.Dimensions
-import com.nandkishor.quizapp.presentation.nav_graph.HomeScreen
+import com.nandkishor.quizapp.presentation.navigation.HomeScreen
 
 @Composable
 fun ScoreScreen(score: Int, totalQuestions: Int, navController: NavController) {
-    val systemUiController = rememberSystemUiController()
-    systemUiController.setStatusBarColor(
-        color = MaterialTheme.colorScheme.background
-    )
-    systemUiController.setNavigationBarColor(
-        color = MaterialTheme.colorScheme.background
-    )
-
-    val scoreMessage = when {
-        score == totalQuestions -> "🎉 Perfect! You're a quiz master!"
-        score >= totalQuestions / 2 -> "😊 Great job! Keep practicing!"
-        else -> "😕 Keep trying! You’ll get better!"
-    }
-
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(Dimensions.TwentyFiveDP),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+    Surface(
+        modifier = Modifier.fillMaxSize()
     ) {
-        Text(
-            text = "Quiz Completed!",
-            style = MaterialTheme.typography.headlineMedium,
-            fontWeight = FontWeight.Bold
+        val systemUiController = rememberSystemUiController()
+        systemUiController.setStatusBarColor(
+            color = MaterialTheme.colorScheme.background
+        )
+        systemUiController.setNavigationBarColor(
+            color = MaterialTheme.colorScheme.background
         )
 
-        Spacer(modifier = Modifier.height(Dimensions.FifteenDP))
+        val scoreMessage = when {
+            score == totalQuestions -> "🎉 Perfect! You're a quiz master!"
+            score >= totalQuestions / 2 -> "😊 Great job! Keep practicing!"
+            else -> "😕 Keep trying! You’ll get better!"
+        }
 
-        Text(
-            text = "Your Score",
-            style = MaterialTheme.typography.titleMedium
-        )
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(Dimensions.TwentyFiveDP),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            Text(
+                text = "Quiz Completed!",
+                style = MaterialTheme.typography.headlineMedium,
+                fontWeight = FontWeight.Bold
+            )
 
-        Text(
-            text = "$score / $totalQuestions",
-            style = MaterialTheme.typography.displayLarge,
-            fontWeight = FontWeight.Bold,
-            color = MaterialTheme.colorScheme.primary
-        )
+            Spacer(modifier = Modifier.height(Dimensions.FifteenDP))
 
-        Spacer(modifier = Modifier.height(Dimensions.FifteenDP))
+            Text(
+                text = "Your Score",
+                style = MaterialTheme.typography.titleMedium
+            )
 
-        Text(
-            text = scoreMessage,
-            style = MaterialTheme.typography.bodyLarge,
-            textAlign = TextAlign.Center
-        )
+            Text(
+                text = "$score / $totalQuestions",
+                style = MaterialTheme.typography.displayLarge,
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.primary
+            )
 
-        Spacer(modifier = Modifier.height(Dimensions.TwentyFiveDP))
+            Spacer(modifier = Modifier.height(Dimensions.FifteenDP))
 
-        Button(onClick = {
-            navController.navigate(HomeScreen) {
-                popUpTo(HomeScreen) {inclusive = true}
+            Text(
+                text = scoreMessage,
+                style = MaterialTheme.typography.bodyLarge,
+                textAlign = TextAlign.Center
+            )
+
+            Spacer(modifier = Modifier.height(Dimensions.TwentyFiveDP))
+
+            Button(onClick = {
+                navController.navigate(HomeScreen) {
+                    popUpTo(HomeScreen) { inclusive = true }
+                }
+            }) {
+                Text("Restart Quiz")
             }
-        }) {
-            Text("Restart Quiz")
         }
     }
 }

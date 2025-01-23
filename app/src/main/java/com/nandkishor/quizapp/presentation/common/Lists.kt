@@ -1,7 +1,7 @@
 package com.nandkishor.quizapp.presentation.common
 
 object Lists {
-    val amounts = listOf<String>() + (1..50).map { it.toString() }
+    val amounts = (1..50).map { it.toString() }
 
     val categories = listOf(
         "Any Category" to 0,
@@ -28,7 +28,7 @@ object Lists {
         "Entertainment: Comics" to 29,
         "Science: Gadgets" to 30,
         "Entertainment: Japanese Anime & Manga" to 31,
-        "Entertainment: Cartoon &amp; Animations" to 32
+        "Entertainment: Cartoon & Animations" to 32
     )
 
     val difficulties = listOf("Easy", "Medium", "Hard")

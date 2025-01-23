@@ -22,9 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.nandkishor.quizapp.presentation.common.Dimensions
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -37,6 +35,7 @@ fun QuizBar(
     modifier: Modifier = Modifier,
 ) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
+
     Column{
         CenterAlignedTopAppBar(
             modifier = modifier
@@ -83,7 +82,7 @@ fun QuizBar(
                 modifier = modifier.padding(start = Dimensions.TenDP)
             )
             Text(
-                "Difficulty: ${if (difficulty.isNotBlank()) difficulty else "Mixed"}",
+                "Difficulty: ${if (difficulty.isBlank()) "Mixed" else difficulty}",
                 modifier = modifier.padding(end = Dimensions.TenDP)
             )
         }
@@ -92,13 +91,13 @@ fun QuizBar(
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-private fun Preview() {
-    QuizBar(
-        category = "Science & Tech",
-        noOfQuestions = 10,
-        difficulty = "",
-        navController = rememberNavController()
-    )
-}
+//@Preview(showBackground = true)
+//@Composable
+//private fun Preview() {
+//    QuizBar(
+//        category = "Science & Tech",
+//        noOfQuestions = 10,
+//        difficulty = "",
+//        navController = rememberNavController()
+//    )
+//}

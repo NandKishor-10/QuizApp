@@ -24,6 +24,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
@@ -65,7 +67,8 @@ fun DropdownMenu(
             modifier = Modifier
                 .fillMaxWidth()
                 .clip(MaterialTheme.shapes.large)
-                .menuAnchor(type = MenuAnchorType.PrimaryEditable),
+                .menuAnchor(type = MenuAnchorType.PrimaryEditable)
+                .semantics{ contentDescription = "Dropdown menu for $label"},
             singleLine = true,
             readOnly = true,
             colors = ExposedDropdownMenuDefaults.textFieldColors(),
@@ -103,6 +106,6 @@ private fun DropdownMenuPrev() {
     ) {
         DropdownMenu(lists = lists, onDropdownClick = {})
         Spacer(modifier = Modifier.padding(Dimensions.TwentyFiveDP))
-        DropdownMenu(lists = lists, onDropdownClick = {})
+        DropdownMenu(lists = lists, onDropdownClick = {}, isNecessary = true)
     }
 }

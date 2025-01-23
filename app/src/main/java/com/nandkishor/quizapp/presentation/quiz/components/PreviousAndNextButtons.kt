@@ -24,9 +24,9 @@ import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.text.style.TextAlign
 import androidx.navigation.NavController
 import com.nandkishor.quizapp.presentation.common.Dimensions
-import com.nandkishor.quizapp.presentation.nav_graph.HomeScreen
-import com.nandkishor.quizapp.presentation.nav_graph.ScoreScreen
-import com.nandkishor.quizapp.presentation.quiz.QuizScreenState
+import com.nandkishor.quizapp.presentation.navigation.HomeScreen
+import com.nandkishor.quizapp.presentation.navigation.ScoreScreen
+import com.nandkishor.quizapp.presentation.state.QuizScreenState
 import com.nandkishor.quizapp.ui.theme.Green
 import kotlinx.coroutines.launch
 
@@ -66,7 +66,10 @@ fun PreviousAndNextButtons(
         Button(
             onClick = {
                 if (pagerState.currentPage == noOfQuestions - 1) {
-                    navController.navigate(ScoreScreen(onSubmit(state), noOfQuestions)) {
+                    navController.navigate(ScoreScreen(
+                        onSubmit(state),
+                        noOfQuestions
+                    )) {
                         popUpTo(HomeScreen)
                     }
                 }
@@ -77,15 +80,18 @@ fun PreviousAndNextButtons(
             },
             modifier = modifier.weight(1f),
             colors = ButtonDefaults.buttonColors(
-                containerColor = if (pagerState.currentPage != noOfQuestions -1) MaterialTheme.colorScheme.primary
+                containerColor = if (pagerState.currentPage != noOfQuestions -1)
+                    MaterialTheme.colorScheme.primary
                 else Green,
-                contentColor = if (pagerState.currentPage != noOfQuestions -1) MaterialTheme.colorScheme.onPrimary
+                contentColor = if (pagerState.currentPage != noOfQuestions -1)
+                    MaterialTheme.colorScheme.onPrimary
                 else White
             )
         ) {
-            Text(text = if (pagerState.currentPage != noOfQuestions - 1) "Next" else "Submit", textAlign = TextAlign.Center)
-            Icon(
-                imageVector = if (pagerState.currentPage != noOfQuestions - 1) Icons.AutoMirrored.Filled.KeyboardArrowRight
+            Text(text = if (pagerState.currentPage != noOfQuestions - 1) "Next"
+            else "Submit", textAlign = TextAlign.Center)
+            Icon(imageVector = if (pagerState.currentPage != noOfQuestions - 1)
+                    Icons.AutoMirrored.Filled.KeyboardArrowRight
                 else Icons.Default.Done,
                 contentDescription = null
             )
@@ -96,13 +102,14 @@ fun PreviousAndNextButtons(
 fun onSubmit(state: QuizScreenState): Int {
     var score = 0
     for ((questionId, selectedOption) in state.userAnswers) {
-        if (state.quizState[questionId].quiz?.correct_answer == selectedOption) {
+        if (state.quizState[questionId].quiz?.correctAnswer == selectedOption) {
             score++
         }
     }
     Log.d("score Submit", "$score")
     return score
 }
+
 
 //@Preview(showBackground = true, showSystemUi = true)
 //@Composable

@@ -16,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.nandkishor.quizapp.presentation.common.Dimensions
 import com.nandkishor.quizapp.presentation.quiz.components.OptionButton
+import com.nandkishor.quizapp.presentation.state.QuizState
 
 @Composable
 fun QuizInterface(
@@ -25,8 +26,8 @@ fun QuizInterface(
     onOptionUnselected: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val question = characterCodeDecoder(quizState.quiz?.question!!)
-    val options = quizState.shuffledOptions?.map {option -> characterCodeDecoder(option)}
+    val question = characterCodeDecoder(quizState.quiz?.question ?: "")
+    val options = quizState.shuffledOptions?.map { option -> characterCodeDecoder(option) }
 
     Box(
         modifier = modifier
@@ -34,21 +35,25 @@ fun QuizInterface(
             .padding(Dimensions.TenDP)
             .selectableGroup(),
     ) {
-        Column (
+        Column(
             modifier = modifier
                 .selectableGroup()
                 .verticalScroll(rememberScrollState())
         ) {
+            // Displaying the question
             Row {
                 Text(text = "$qNumber. ", style = MaterialTheme.typography.headlineSmall)
                 Text(text = question, style = MaterialTheme.typography.headlineSmall)
             }
+
             Spacer(modifier = modifier.padding(vertical = Dimensions.TenDP))
-            options?.forEachIndexed { index,option ->
+
+            // Displaying the options
+            options?.forEachIndexed { index, option ->
                 OptionButton(
                     option = option,
                     selected = quizState.selectedOptions == index,
-                    onOptionSelected = { onOptionSelected(index)},
+                    onOptionSelected = { onOptionSelected(index) },
                     onOptionUnselected = { onOptionUnselected(index) }
                 )
             }
@@ -56,7 +61,7 @@ fun QuizInterface(
     }
 }
 
-
+// Function to decode HTML entities in the question/option text
 fun characterCodeDecoder(input: String) =
     Html.fromHtml(input, Html.FROM_HTML_MODE_LEGACY).toString()
 

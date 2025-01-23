@@ -1,14 +1,40 @@
 package com.nandkishor.quizapp.data.remote
 
-import retrofit2.http.GET
-import retrofit2.http.Query
+import android.util.Log
+import com.nandkishor.quizapp.data.remote.models.Result
+import io.ktor.client.*
+import io.ktor.client.call.*
+import io.ktor.client.request.*
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
-interface QuizApi {
-    @GET("api.php")
+class QuizApi(private val client: HttpClient) {
+
     suspend fun getQuizzes(
-        @Query("amount") amount: Int?,
-        @Query("category") category: Int?,
-        @Query("difficulty") difficulty: String?,
-        @Query("type") type: String?
-    ): QuizResponse
+        amount: Int? = 10,
+        category: Int? = null,
+        difficulty: String? = null,
+        type: String? = null
+    ): QuizResponse {
+        return try {
+            client.get("https://opentdb.com/api.php") {
+                url {
+                    parameters.append("amount", amount.toString())
+                    category?.let { parameters.append("category", it.toString()) }
+                    difficulty?.let { parameters.append("difficulty", it) }
+                    type?.let { parameters.append("type", it) }
+                }
+            }.body()
+        } catch (e: Exception) {
+            Log.e("Error e", e.message.toString())
+            throw Exception("Failed to fetch quizzes: ${e.localizedMessage}")
+        }
+
+    }
 }
+
+@Serializable
+data class QuizResponse(
+    @SerialName("response_code") val responseCode: Int,
+    @SerialName("results") val results: List<Result>
+)
