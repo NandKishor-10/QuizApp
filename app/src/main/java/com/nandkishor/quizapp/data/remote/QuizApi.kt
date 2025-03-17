@@ -2,9 +2,9 @@ package com.nandkishor.quizapp.data.remote
 
 import android.util.Log
 import com.nandkishor.quizapp.data.remote.models.Result
-import io.ktor.client.*
-import io.ktor.client.call.*
-import io.ktor.client.request.*
+import io.ktor.client.HttpClient
+import io.ktor.client.call.body
+import io.ktor.client.request.get
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

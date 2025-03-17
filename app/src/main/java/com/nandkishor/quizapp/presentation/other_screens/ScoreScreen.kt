@@ -15,10 +15,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.nandkishor.quizapp.presentation.common.Dimensions
-import com.nandkishor.quizapp.presentation.navigation.HomeScreen
+import com.nandkishor.quizapp.presentation.navigation.HomescreenWithDrawer
 
 @Composable
 fun ScoreScreen(score: Int, totalQuestions: Int, navController: NavController) {
@@ -77,12 +79,22 @@ fun ScoreScreen(score: Int, totalQuestions: Int, navController: NavController) {
             Spacer(modifier = Modifier.height(Dimensions.TwentyFiveDP))
 
             Button(onClick = {
-                navController.navigate(HomeScreen) {
-                    popUpTo(HomeScreen) { inclusive = true }
+                navController.navigate(HomescreenWithDrawer) {
+                    popUpTo(HomescreenWithDrawer) {inclusive = true}
                 }
             }) {
                 Text("Restart Quiz")
             }
         }
     }
+}
+
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+private fun ScoreScreenPrev() {
+    ScoreScreen(
+        10,
+        10,
+        rememberNavController()
+    )
 }

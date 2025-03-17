@@ -24,7 +24,8 @@ import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.text.style.TextAlign
 import androidx.navigation.NavController
 import com.nandkishor.quizapp.presentation.common.Dimensions
-import com.nandkishor.quizapp.presentation.navigation.HomeScreen
+import com.nandkishor.quizapp.presentation.navigation.HomescreenWithDrawer
+//import com.nandkishor.quizapp.presentation.navigation.HomeScreen
 import com.nandkishor.quizapp.presentation.navigation.ScoreScreen
 import com.nandkishor.quizapp.presentation.state.QuizScreenState
 import com.nandkishor.quizapp.ui.theme.Green
@@ -70,7 +71,7 @@ fun PreviousAndNextButtons(
                         onSubmit(state),
                         noOfQuestions
                     )) {
-                        popUpTo(HomeScreen)
+                        popUpTo(HomescreenWithDrawer)
                     }
                 }
                 else coroutineScope.launch { pagerState.animateScrollToPage(

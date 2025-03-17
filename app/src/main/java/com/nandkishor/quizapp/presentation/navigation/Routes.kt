@@ -2,9 +2,8 @@ package com.nandkishor.quizapp.presentation.navigation
 
 import kotlinx.serialization.Serializable
 
-
 @Serializable
-object HomeScreen
+object HomescreenWithDrawer
 
 @Serializable
 data class QuizScreen(
