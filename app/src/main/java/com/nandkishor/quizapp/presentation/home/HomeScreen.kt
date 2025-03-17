@@ -26,8 +26,7 @@ import com.nandkishor.quizapp.presentation.home.components.ElevatedNextButton
 import com.nandkishor.quizapp.presentation.home.components.HeaderBar
 
 @Composable
-fun HomeScreen(navController: NavController, drawerState: DrawerState, modifier: Modifier = Modifier) {
-
+fun HomeScreen(navController: NavController, drawerState: DrawerState, modifier: Modifier = Modifier, boxModifier: Modifier) {
     val systemUiController = rememberSystemUiController()
     systemUiController.setStatusBarColor(
         color = MaterialTheme.colorScheme.primaryContainer
@@ -43,7 +42,7 @@ fun HomeScreen(navController: NavController, drawerState: DrawerState, modifier:
 
     Scaffold (
         modifier = modifier.fillMaxSize(),
-        topBar = { HeaderBar(navController, drawerState) },
+        topBar = { HeaderBar(drawerState) },
     ) { innerPadding ->
         Column (
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -76,6 +75,7 @@ fun HomeScreen(navController: NavController, drawerState: DrawerState, modifier:
             )
         }
     }
+    Box(modifier = modifier.then(boxModifier))
 }
 
 //@Preview(showBackground = true, showSystemUi = true)

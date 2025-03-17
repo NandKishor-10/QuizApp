@@ -11,22 +11,34 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.nandkishor.quizapp.app.DataStoreManager
 import com.nandkishor.quizapp.presentation.common.Dimensions
 import com.nandkishor.quizapp.presentation.navigation.HomescreenWithDrawer
+import com.nandkishor.quizapp.util.calculatePercentage
+import com.nandkishor.quizapp.util.formatDouble
 
 @Composable
 fun ScoreScreen(score: Int, totalQuestions: Int, navController: NavController) {
     Surface(
         modifier = Modifier.fillMaxSize()
     ) {
+        val scoreInDouble = calculatePercentage(score, totalQuestions)
+        val context = LocalContext.current
+        val dataStoreManager = remember { DataStoreManager(context) }
+        val existingScore by dataStoreManager.getHighestScore().collectAsState(0.0)
         val systemUiController = rememberSystemUiController()
         systemUiController.setStatusBarColor(
             color = MaterialTheme.colorScheme.background
@@ -34,6 +46,11 @@ fun ScoreScreen(score: Int, totalQuestions: Int, navController: NavController) {
         systemUiController.setNavigationBarColor(
             color = MaterialTheme.colorScheme.background
         )
+
+        LaunchedEffect(existingScore, scoreInDouble) {
+            if (scoreInDouble > existingScore)
+                dataStoreManager.updateScore(scoreInDouble)
+        }
 
         val scoreMessage = when {
             score == totalQuestions -> "🎉 Perfect! You're a quiz master!"
@@ -62,10 +79,18 @@ fun ScoreScreen(score: Int, totalQuestions: Int, navController: NavController) {
             )
 
             Text(
-                text = "$score / $totalQuestions",
+                text = "${formatDouble(scoreInDouble)} %",
                 style = MaterialTheme.typography.displayLarge,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.primary
+            )
+
+            Spacer(modifier = Modifier.height(Dimensions.FifteenDP))
+
+            Text(
+                text = "You answered $score out of $totalQuestions correctly.",
+                style = MaterialTheme.typography.bodyLarge,
+                textAlign = TextAlign.Center
             )
 
             Spacer(modifier = Modifier.height(Dimensions.FifteenDP))
@@ -88,6 +113,8 @@ fun ScoreScreen(score: Int, totalQuestions: Int, navController: NavController) {
         }
     }
 }
+
+
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable

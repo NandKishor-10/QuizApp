@@ -2,8 +2,8 @@ package com.nandkishor.quizapp.app
 
 import android.content.Context
 import androidx.datastore.preferences.core.booleanPreferencesKey
+import androidx.datastore.preferences.core.doublePreferencesKey
 import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.core.floatPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -14,7 +14,7 @@ class DataStoreManager (private val context: Context) {
 
     companion object {
         val DARK_MODE_KEY = booleanPreferencesKey("isDarkModeEnabled")
-        val HIGHEST_SCORE = floatPreferencesKey("highestScore")
+        val HIGHEST_SCORE = doublePreferencesKey("highestScore")
     }
 
     suspend fun updateThemePref(isDarkModeEnabled: Boolean) {
@@ -23,7 +23,7 @@ class DataStoreManager (private val context: Context) {
         }
     }
 
-    suspend fun updateScore(newScore: Float) {
+    suspend fun updateScore(newScore: Double) {
         context.dataStore.edit {
             it[HIGHEST_SCORE] = newScore
         }
@@ -35,9 +35,9 @@ class DataStoreManager (private val context: Context) {
         }
     }
 
-    fun getHighestScore(): Flow<Float> {
+    fun getHighestScore(): Flow<Double> {
         return context.dataStore.data.map {
-            it[HIGHEST_SCORE] ?: 0f
+            it[HIGHEST_SCORE] ?: 0.0
         }
     }
 }
