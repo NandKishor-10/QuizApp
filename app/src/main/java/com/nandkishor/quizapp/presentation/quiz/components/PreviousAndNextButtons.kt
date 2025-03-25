@@ -25,8 +25,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.navigation.NavController
 import com.nandkishor.quizapp.presentation.common.Dimensions
 import com.nandkishor.quizapp.presentation.navigation.HomescreenWithDrawer
-//import com.nandkishor.quizapp.presentation.navigation.HomeScreen
-import com.nandkishor.quizapp.presentation.navigation.ScoreScreen
+import com.nandkishor.quizapp.presentation.navigation.ScoreScreenArgs
 import com.nandkishor.quizapp.presentation.state.QuizScreenState
 import com.nandkishor.quizapp.ui.theme.Green
 import kotlinx.coroutines.launch
@@ -67,10 +66,12 @@ fun PreviousAndNextButtons(
         Button(
             onClick = {
                 if (pagerState.currentPage == noOfQuestions - 1) {
-                    navController.navigate(ScoreScreen(
-                        onSubmit(state),
-                        noOfQuestions
-                    )) {
+                    navController.navigate(
+                        ScoreScreenArgs(
+                            score = onSubmit(state),
+                            noOfQuestions = noOfQuestions
+                        )
+                    ) {
                         popUpTo(HomescreenWithDrawer)
                     }
                 }
@@ -90,7 +91,7 @@ fun PreviousAndNextButtons(
             )
         ) {
             Text(text = if (pagerState.currentPage != noOfQuestions - 1) "Next"
-            else "Submit", textAlign = TextAlign.Center)
+            else "Finish", textAlign = TextAlign.Center)
             Icon(imageVector = if (pagerState.currentPage != noOfQuestions - 1)
                     Icons.AutoMirrored.Filled.KeyboardArrowRight
                 else Icons.Default.Done,

@@ -1,6 +1,5 @@
 package com.nandkishor.quizapp.presentation.quiz
 
-import android.text.Html
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -17,6 +16,7 @@ import androidx.compose.ui.Modifier
 import com.nandkishor.quizapp.presentation.common.Dimensions
 import com.nandkishor.quizapp.presentation.quiz.components.OptionButton
 import com.nandkishor.quizapp.presentation.state.QuizState
+import com.nandkishor.quizapp.util.characterCodeDecoder
 
 @Composable
 fun QuizInterface(
@@ -62,8 +62,7 @@ fun QuizInterface(
 }
 
 // Function to decode HTML entities in the question/option text
-fun characterCodeDecoder(input: String) =
-    Html.fromHtml(input, Html.FROM_HTML_MODE_LEGACY).toString()
+
 
 //@Preview(showSystemUi = true)
 //@Composable

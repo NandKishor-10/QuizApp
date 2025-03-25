@@ -1,12 +1,13 @@
 package com.nandkishor.quizapp.presentation.navigation
 
+import com.nandkishor.quizapp.data.remote.models.Question
 import kotlinx.serialization.Serializable
 
 @Serializable
 object HomescreenWithDrawer
 
 @Serializable
-data class QuizScreen(
+data class QuizScreenArgs(
     val noOfQuestions: Int,
     val category: String?,
     val difficulty: String?,
@@ -14,7 +15,8 @@ data class QuizScreen(
 )
 
 @Serializable
-data class ScoreScreen(
+data class ScoreScreenArgs(
     val score: Int,
     val noOfQuestions: Int
 )
+

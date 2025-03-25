@@ -71,7 +71,7 @@ fun AppNavigation() {
                         .clip(RoundedCornerShape(if (drawerState.isOpen) 32.dp else 0.dp))
                         .border(
                             width = if (drawerState.isOpen) 1.dp else 0.dp,
-                            color = if (drawerState.isOpen) MaterialTheme.colorScheme.onBackground else Color.Transparent,
+                            color = if (drawerState.isOpen) Color.Gray else Color.Transparent,
                             shape = RoundedCornerShape(if (drawerState.isOpen) 32.dp else 0.dp)
                         ),
                     boxModifier = Modifier
@@ -93,8 +93,8 @@ fun AppNavigation() {
             }
         }
 
-        composable<QuizScreen> {
-            val args = it.toRoute<QuizScreen>()
+        composable<QuizScreenArgs> {
+            val args = it.toRoute<QuizScreenArgs>()
 
             // Use Koin to inject the ViewModel
             val quizViewModel: QuizViewModel = koinViewModel()
@@ -111,8 +111,8 @@ fun AppNavigation() {
             )
         }
 
-        composable<ScoreScreen> {
-            val args = it.toRoute<ScoreScreen>()
+        composable<ScoreScreenArgs> {
+            val args = it.toRoute<ScoreScreenArgs>()
 
             ScoreScreen(
                 score = args.score,

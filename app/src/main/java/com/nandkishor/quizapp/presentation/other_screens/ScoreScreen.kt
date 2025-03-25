@@ -13,16 +13,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.nandkishor.quizapp.app.DataStoreManager
 import com.nandkishor.quizapp.presentation.common.Dimensions
@@ -110,18 +108,26 @@ fun ScoreScreen(score: Int, totalQuestions: Int, navController: NavController) {
             }) {
                 Text("Restart Quiz")
             }
+
+            Spacer(modifier = Modifier.height(Dimensions.TwentyFiveDP))
+
+            Button(onClick = {
+
+            }) {
+                Text("Review Answers")
+            }
         }
     }
 }
 
 
 
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-private fun ScoreScreenPrev() {
-    ScoreScreen(
-        10,
-        10,
-        rememberNavController()
-    )
-}
+//@Preview(showBackground = true, showSystemUi = true)
+//@Composable
+//private fun ScoreScreenPrev() {
+//    ScoreScreen(
+//        10,
+//        10,
+//        rememberNavController()
+//    )
+//}

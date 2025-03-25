@@ -21,7 +21,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.nandkishor.quizapp.presentation.common.Dimensions
-import com.nandkishor.quizapp.presentation.navigation.QuizScreen
+import com.nandkishor.quizapp.presentation.navigation.QuizScreenArgs
 
 @Composable
 fun ElevatedNextButton(
@@ -37,7 +37,7 @@ fun ElevatedNextButton(
         onClick = {
             if (noOfQuestions.isNotBlank()) {
                 navController.navigate(
-                    QuizScreen(
+                    QuizScreenArgs(
                         noOfQuestions = noOfQuestions.toInt(),
                         category = category,
                         difficulty = difficulty,

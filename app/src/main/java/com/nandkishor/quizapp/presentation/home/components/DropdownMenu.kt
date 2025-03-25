@@ -35,7 +35,7 @@ import com.nandkishor.quizapp.presentation.common.Dimensions
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DropdownMenu(
-    label: String = "label",
+    label: String = "",
     defaultValue: String = "",
     isNecessary: Boolean = false,
     lists: List<String>,

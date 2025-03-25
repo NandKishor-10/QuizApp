@@ -5,6 +5,7 @@ import android.content.pm.ActivityInfo
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
@@ -21,7 +22,7 @@ class MainActivity : ComponentActivity() {
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         val dataStoreManager = DataStoreManager(this)
-        var darkThemeState: Boolean? = null
+        var darkThemeState: String? = null
 
         runBlocking {
             darkThemeState = dataStoreManager.getThemeFlow().firstOrNull()
@@ -31,9 +32,16 @@ class MainActivity : ComponentActivity() {
             darkThemeState == null
         }
         setContent {
-            val darkTheme by dataStoreManager.getThemeFlow().collectAsState(darkThemeState?: false)
+            val themePref by dataStoreManager.getThemeFlow().collectAsState(darkThemeState?: "System default")
 
-            QuizAppTheme(darkTheme = darkTheme) {
+            QuizAppTheme(
+                darkTheme = when(themePref) {
+                    "Dark theme" -> true
+                    "Light theme" -> false
+                    else -> isSystemInDarkTheme()
+                },
+                dynamicColor = true
+            ) {
                 AppNavigation()
             }
         }
