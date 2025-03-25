@@ -12,27 +12,3 @@ data class Result(
     @SerialName("question") val question: String,
     @SerialName("type") val type: String
 )
-
-@Serializable
-data class Question(
-    val text: String,
-    val correctAnswer: String,
-    val allAnswers: List<String>,
-    val category: String,
-    val difficulty: String,
-    val type: String,
-    val userAnswer: String? = null
-) {
-    companion object {
-        fun fromResult(result: Result, shuffledOptions: List<String>): Question {
-            return Question(
-                result.question,
-                result.correctAnswer,
-                shuffledOptions,
-                result.category,
-                result.difficulty,
-                result.type
-            )
-        }
-    }
-}

@@ -1,6 +1,5 @@
 package com.nandkishor.quizapp.presentation.navigation
 
-import com.nandkishor.quizapp.data.remote.models.Question
 import kotlinx.serialization.Serializable
 
 @Serializable
