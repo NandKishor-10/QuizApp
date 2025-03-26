@@ -1,6 +1,8 @@
 package com.nandkishor.quizapp.util
 
 import android.text.Html
+import com.google.gson.Gson
+import com.nandkishor.quizapp.presentation.state.QuizScreenState
 
 fun calculatePercentage(score: Int, totalQuestions: Int) =
     if (totalQuestions != 0) (score.toDouble() / totalQuestions) * 100
@@ -15,3 +17,9 @@ fun formatDouble(value: Double) =
 
 fun characterCodeDecoder(input: String) =
     Html.fromHtml(input, Html.FROM_HTML_MODE_LEGACY).toString()
+
+val gson = Gson()
+
+fun QuizScreenState.toJson(): String? = gson.toJson(this)
+
+fun String.toQuizScreenState(): QuizScreenState? = gson.fromJson(this, QuizScreenState::class.java)

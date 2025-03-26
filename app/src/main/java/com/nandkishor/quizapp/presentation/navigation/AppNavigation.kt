@@ -28,6 +28,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import com.nandkishor.quizapp.presentation.home.HomeScreen
 import com.nandkishor.quizapp.presentation.home.HomeScreenDrawer
+import com.nandkishor.quizapp.presentation.other_screens.ReviewScreen
 import com.nandkishor.quizapp.presentation.other_screens.ScoreScreen
 import com.nandkishor.quizapp.presentation.quiz.QuizScreen
 import com.nandkishor.quizapp.presentation.state.QuizScreenState
@@ -116,6 +117,18 @@ fun AppNavigation() {
             ScoreScreen(
                 score = args.score,
                 totalQuestions = args.noOfQuestions,
+                quizStateJson = args.quizStateJson,
+                navController = navController
+            )
+        }
+
+        composable<ReviewScreenArgs> {
+            val args = it.toRoute<ReviewScreenArgs>()
+
+            ReviewScreen(
+                score = args.score,
+                totalQuestions = args.totalQuestions,
+                quizStateJson = args.quizStateJson,
                 navController = navController
             )
         }

@@ -21,9 +21,9 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.nandkishor.quizapp.presentation.common.Dimensions
 import com.nandkishor.quizapp.presentation.common.Lists.categories
 import com.nandkishor.quizapp.presentation.common.SecureScreen
+import com.nandkishor.quizapp.presentation.common.TopHeader
 import com.nandkishor.quizapp.presentation.other_screens.ErrorScreen
 import com.nandkishor.quizapp.presentation.quiz.components.PreviousAndNextButtons
-import com.nandkishor.quizapp.presentation.quiz.components.QuizBar
 import com.nandkishor.quizapp.presentation.state.EventQuizScreen
 import com.nandkishor.quizapp.presentation.state.QuizScreenState
 
@@ -74,13 +74,23 @@ fun QuizScreen(
     Scaffold(
         modifier = modifier.fillMaxSize(),
         topBar = {
-            QuizBar(
-                category = category.toString(),
+            TopHeader(
+                title = if (category!!.isNotBlank()) category else "Any Category",
                 noOfQuestions = noOfQuestions,
-                difficulty = difficulty.toString(),
+                difficulty = if (difficulty!!.isNotBlank()) difficulty else "Mixed",
+                showBackButton = true,
+                showQuizInfo = true,
                 navController = navController
             )
         }
+//        topBar = {
+//            QuizBar(
+//                category = category.toString(),
+//                noOfQuestions = noOfQuestions,
+//                difficulty = difficulty.toString(),
+//                navController = navController
+//            )
+//        }
     ) { innerPadding ->
         if (quizFetched(state = state, noOfOptions = noOfOptions, innerPadding = innerPadding)) {
             val pagerState = rememberPagerState { state.quizState.size }
@@ -122,7 +132,11 @@ fun QuizScreen(
 }
 
 @Composable
-fun quizFetched(state: QuizScreenState, noOfOptions: Int, innerPadding: PaddingValues): Boolean {
+fun quizFetched(
+    state: QuizScreenState,
+    noOfOptions: Int,
+    innerPadding: PaddingValues
+): Boolean {
     return when {
         state.isLoading -> {
             ShimmerQuizInterface(noOfOptions, innerPadding)

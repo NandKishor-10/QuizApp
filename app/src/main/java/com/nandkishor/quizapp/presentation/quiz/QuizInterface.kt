@@ -61,9 +61,6 @@ fun QuizInterface(
     }
 }
 
-// Function to decode HTML entities in the question/option text
-
-
 //@Preview(showSystemUi = true)
 //@Composable
 //private fun QuizInterfacePrev() {

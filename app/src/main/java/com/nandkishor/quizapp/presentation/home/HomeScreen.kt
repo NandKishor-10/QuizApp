@@ -21,6 +21,7 @@ import androidx.navigation.NavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.nandkishor.quizapp.presentation.common.Dimensions
 import com.nandkishor.quizapp.presentation.common.Lists
+import com.nandkishor.quizapp.presentation.common.TopHeader
 import com.nandkishor.quizapp.presentation.home.components.DropdownMenu
 import com.nandkishor.quizapp.presentation.home.components.ElevatedNextButton
 import com.nandkishor.quizapp.presentation.home.components.HeaderBar
@@ -47,7 +48,13 @@ fun HomeScreen(
 
     Scaffold (
         modifier = modifier.fillMaxSize(),
-        topBar = { HeaderBar(drawerState) },
+        topBar = { TopHeader(
+            title = "Quiz App",
+            drawerState = drawerState,
+            showDrawerButton = true,
+            navController = navController
+        ) }
+//        topBar = { HeaderBar(drawerState) },
     ) { innerPadding ->
         Column (
             horizontalAlignment = Alignment.CenterHorizontally,

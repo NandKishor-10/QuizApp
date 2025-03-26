@@ -28,6 +28,7 @@ import com.nandkishor.quizapp.presentation.navigation.HomescreenWithDrawer
 import com.nandkishor.quizapp.presentation.navigation.ScoreScreenArgs
 import com.nandkishor.quizapp.presentation.state.QuizScreenState
 import com.nandkishor.quizapp.ui.theme.Green
+import com.nandkishor.quizapp.util.toJson
 import kotlinx.coroutines.launch
 
 @Composable
@@ -69,7 +70,8 @@ fun PreviousAndNextButtons(
                     navController.navigate(
                         ScoreScreenArgs(
                             score = onSubmit(state),
-                            noOfQuestions = noOfQuestions
+                            noOfQuestions = noOfQuestions,
+                            quizStateJson = state.toJson()
                         )
                     ) {
                         popUpTo(HomescreenWithDrawer)

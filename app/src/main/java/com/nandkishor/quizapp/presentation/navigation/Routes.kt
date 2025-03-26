@@ -1,6 +1,7 @@
 package com.nandkishor.quizapp.presentation.navigation
 
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.Json
 
 @Serializable
 object HomescreenWithDrawer
@@ -16,6 +17,14 @@ data class QuizScreenArgs(
 @Serializable
 data class ScoreScreenArgs(
     val score: Int,
-    val noOfQuestions: Int
+    val noOfQuestions: Int,
+    val quizStateJson: String?
+)
+
+@Serializable
+data class ReviewScreenArgs(
+    val score: Int,
+    val totalQuestions: Int,
+    val quizStateJson: String?
 )
 

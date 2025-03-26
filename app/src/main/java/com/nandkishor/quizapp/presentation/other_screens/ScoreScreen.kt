@@ -25,11 +25,17 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.nandkishor.quizapp.app.DataStoreManager
 import com.nandkishor.quizapp.presentation.common.Dimensions
 import com.nandkishor.quizapp.presentation.navigation.HomescreenWithDrawer
+import com.nandkishor.quizapp.presentation.navigation.ReviewScreenArgs
 import com.nandkishor.quizapp.util.calculatePercentage
 import com.nandkishor.quizapp.util.formatDouble
 
 @Composable
-fun ScoreScreen(score: Int, totalQuestions: Int, navController: NavController) {
+fun ScoreScreen(
+    score: Int,
+    totalQuestions: Int,
+    quizStateJson: String?,
+    navController: NavController
+) {
     Surface(
         modifier = Modifier.fillMaxSize()
     ) {
@@ -112,7 +118,11 @@ fun ScoreScreen(score: Int, totalQuestions: Int, navController: NavController) {
             Spacer(modifier = Modifier.height(Dimensions.TwentyFiveDP))
 
             Button(onClick = {
-
+                navController.navigate(ReviewScreenArgs(
+                    score = score,
+                    totalQuestions = totalQuestions,
+                    quizStateJson = quizStateJson
+                ))
             }) {
                 Text("Review Answers")
             }
