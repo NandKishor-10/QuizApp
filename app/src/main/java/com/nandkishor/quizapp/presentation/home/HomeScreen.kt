@@ -24,7 +24,6 @@ import com.nandkishor.quizapp.presentation.common.Lists
 import com.nandkishor.quizapp.presentation.common.TopHeader
 import com.nandkishor.quizapp.presentation.home.components.DropdownMenu
 import com.nandkishor.quizapp.presentation.home.components.ElevatedNextButton
-import com.nandkishor.quizapp.presentation.home.components.HeaderBar
 
 @Composable
 fun HomeScreen(
