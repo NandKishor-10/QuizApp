@@ -1,10 +1,9 @@
 package com.nandkishor.quizapp.presentation.other_screens
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,7 +14,10 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Button
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.RadioButtonDefaults
@@ -27,17 +29,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.nandkishor.quizapp.presentation.common.Dimensions
 import com.nandkishor.quizapp.presentation.common.SecureScreen
 import com.nandkishor.quizapp.presentation.common.TopHeader
 import com.nandkishor.quizapp.presentation.quiz.components.PreviousAndNextButtons
 import com.nandkishor.quizapp.presentation.state.QuizState
+import com.nandkishor.quizapp.ui.theme.DarkGreen
+import com.nandkishor.quizapp.ui.theme.Green
+import com.nandkishor.quizapp.ui.theme.LightGreen
+import com.nandkishor.quizapp.ui.theme.LightRed
+import com.nandkishor.quizapp.ui.theme.Red
 import com.nandkishor.quizapp.util.characterCodeDecoder
 import com.nandkishor.quizapp.util.toQuizScreenState
-import com.nandkishor.quizapp.ui.theme.Green
-import com.nandkishor.quizapp.ui.theme.Red
 
 
 @Composable
@@ -60,8 +64,11 @@ fun ReviewScreen(
         topBar = {
             TopHeader(
                 title = "Review Answers",
+                navController = navController,
                 showBackButton = true,
-                navController = navController
+                score = score,
+                totalQuestions = totalQuestions,
+                showScore = true
             )
         },
         modifier = Modifier.fillMaxSize()
@@ -166,6 +173,13 @@ fun OptionButtonReview(
             .fillMaxWidth()
             .padding(Dimensions.FiveDP)
             .clip(MaterialTheme.shapes.medium)
+            .background(
+                when {
+                    selectedOption == option -> LightGreen
+                    selected -> LightRed
+                    else -> MaterialTheme.colorScheme.background
+                }
+            )
             .border(
                 width = when {
                     option == selectedOption -> Dimensions.ThreeDP
@@ -189,18 +203,61 @@ fun OptionButtonReview(
         )
         Spacer(modifier = Modifier.padding(Dimensions.FiveDP))
         Text(text = option, style = MaterialTheme.typography.bodyLarge)
+        Spacer(Modifier.weight(1f))
+        if (selectedOption == option || selected) {
+            Icon(
+                imageVector = if (selectedOption == option) Icons.Default.Check else Icons.Default.Close,
+                contentDescription = null,
+                tint = if (selectedOption == option) DarkGreen else Red
+            )
+        }
     }
 }
 
-
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-private fun ReviewScreenPreview() {
-    val quizStateJson = "{\"error\":\"\",\"isLoading\":false,\"quizState\":[{\"quiz\":{\"category\":\"Geography\",\"correctAnswer\":\"Wien\",\"difficulty\":\"medium\",\"incorrectAnswers\":[\"Z\\u0026uuml;rich\",\"Frankfurt\",\"Wien\"],\"question\":\"Which city is the capital of Switzerland?\",\"type\":\"multiple\"},\"selectedOptions\":1,\"shuffledOptions\":[\"Wien\",\"Bern\",\"Frankfurt\",\"Z\\u0026uuml;rich\"]},{\"quiz\":{\"category\":\"General Knowledge\",\"correctAnswer\":\"19\",\"difficulty\":\"easy\",\"incorrectAnswers\":[\"20\",\"12\",\"15\"],\"question\":\"On a dartboard, what number is directly opposite No. 1?\",\"type\":\"multiple\"},\"selectedOptions\":0,\"shuffledOptions\":[\"19\",\"20\",\"12\",\"15\"]},{\"quiz\":{\"category\":\"Entertainment: Film\",\"correctAnswer\":\"False\",\"difficulty\":\"easy\",\"incorrectAnswers\":[\"True\"],\"question\":\"The word \\u0026quot;Inception\\u0026quot; came from the 2010 blockbuster hit \\u0026quot;Inception\\u0026quot;.\",\"type\":\"boolean\"},\"selectedOptions\":0,\"shuffledOptions\":[\"False\",\"True\"]}],\"userAnswers\":{\"0\":\"Bern\",\"1\":\"19\",\"2\":\"False\"}}"
-    ReviewScreen(
-        score = 2,
-        totalQuestions = 3,
-        quizStateJson = quizStateJson,
-        navController = rememberNavController()
-    )
-}
+//@Preview(showBackground = true)
+//@Composable
+//private fun OptionPrev1() {
+//    OptionButtonReview(
+//        "Let say",
+//        false,
+//        "Let say"
+//    )
+//}
+//@Preview(showBackground = true)
+//@Composable
+//private fun OptionPrev2() {
+//    OptionButtonReview(
+//        "Let say",
+//        true,
+//        "Let say"
+//    )
+//}
+//@Preview(showBackground = true)
+//@Composable
+//private fun OptionPrev3() {
+//    OptionButtonReview(
+//        "Let say",
+//        false,
+//        "Let. say"
+//    )
+//}
+//@Preview(showBackground = true)
+//@Composable
+//private fun OptionPrev4() {
+//    OptionButtonReview(
+//        "Let say",
+//        true,
+//        "Let. say"
+//    )
+//}
+//@Preview(showBackground = true, showSystemUi = true)
+//@Composable
+//private fun ReviewScreenPreview() {
+//    val quizStateJson = "{\"error\":\"\",\"isLoading\":false,\"quizState\":[{\"quiz\":{\"category\":\"Geography\",\"correctAnswer\":\"Wien\",\"difficulty\":\"medium\",\"incorrectAnswers\":[\"Z\\u0026uuml;rich\",\"Frankfurt\",\"Wien\"],\"question\":\"Which city is the capital of Switzerland?\",\"type\":\"multiple\"},\"selectedOptions\":1,\"shuffledOptions\":[\"Wien\",\"Bern\",\"Frankfurt\",\"Z\\u0026uuml;rich\"]},{\"quiz\":{\"category\":\"General Knowledge\",\"correctAnswer\":\"19\",\"difficulty\":\"easy\",\"incorrectAnswers\":[\"20\",\"12\",\"15\"],\"question\":\"On a dartboard, what number is directly opposite No. 1?\",\"type\":\"multiple\"},\"selectedOptions\":0,\"shuffledOptions\":[\"19\",\"20\",\"12\",\"15\"]},{\"quiz\":{\"category\":\"Entertainment: Film\",\"correctAnswer\":\"False\",\"difficulty\":\"easy\",\"incorrectAnswers\":[\"True\"],\"question\":\"The word \\u0026quot;Inception\\u0026quot; came from the 2010 blockbuster hit \\u0026quot;Inception\\u0026quot;.\",\"type\":\"boolean\"},\"selectedOptions\":0,\"shuffledOptions\":[\"False\",\"True\"]}],\"userAnswers\":{\"0\":\"Bern\",\"1\":\"19\",\"2\":\"False\"}}"
+//    ReviewScreen(
+//        score = 2,
+//        totalQuestions = 3,
+//        quizStateJson = quizStateJson,
+//        navController = rememberNavController()
+//    )
+//}
