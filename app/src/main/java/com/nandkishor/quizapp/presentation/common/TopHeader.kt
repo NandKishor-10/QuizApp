@@ -1,12 +1,17 @@
 package com.nandkishor.quizapp.presentation.common
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.BasicText
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.AccountBox
@@ -23,13 +28,24 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.BaselineShift
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.TextUnit
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.nandkishor.quizapp.ui.theme.Black
 import com.nandkishor.quizapp.ui.theme.QuizAppTheme
 import kotlinx.coroutines.launch
 
@@ -41,10 +57,12 @@ fun TopHeader(
     showBackButton: Boolean = false,
     drawerState: DrawerState = rememberDrawerState( DrawerValue.Closed),
     showDrawerButton: Boolean = false,
-    noOfQuestions: Int = 0,
+    totalQuestions: Int = 10,
     difficulty: String = "",
-    showQuizInfo: Boolean = false
-) {
+    showQuizInfo: Boolean = false,
+    score: Int = 5,
+    showScore: Boolean = false
+    ) {
     val coroutineScope = rememberCoroutineScope()
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
 
@@ -99,6 +117,10 @@ fun TopHeader(
                         )
                     }
                 }
+
+                if (showScore) {
+                    FractionText(score, totalQuestions)
+                }
             },
             scrollBehavior = scrollBehavior
         )
@@ -109,7 +131,7 @@ fun TopHeader(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
-                    "Questions: $noOfQuestions",
+                    "Questions: $totalQuestions",
                     modifier = Modifier.padding(start = Dimensions.TenDP)
                 )
                 Text(
@@ -120,6 +142,38 @@ fun TopHeader(
             Spacer(Modifier.padding(Dimensions.OneDP))
             HorizontalDivider()
         }
+    }
+}
+
+//@Preview(showBackground = true)
+@Composable
+fun FractionText(score: Int, totalQuestions: Int) {
+    BasicText(
+        text = buildAnnotatedString {
+            appendAnnotatedText(score.toString(), BaselineShift(0.5f), 18.sp)
+
+            appendAnnotatedText("/", BaselineShift(0f), 24.sp, Color.Gray)
+
+            appendAnnotatedText(totalQuestions.toString(), BaselineShift(-0.3f), 18.sp)
+        }
+    )
+}
+
+fun AnnotatedString.Builder.appendAnnotatedText(
+    text: String,
+    baselineShift: BaselineShift,
+    fontSize: TextUnit,
+    color: Color = Black
+) {
+    withStyle(
+        style = SpanStyle(
+            fontSize = fontSize,
+            fontWeight = FontWeight.Bold,
+            baselineShift = baselineShift,
+            color = color
+        )
+    ) {
+        append(text)
     }
 }
 

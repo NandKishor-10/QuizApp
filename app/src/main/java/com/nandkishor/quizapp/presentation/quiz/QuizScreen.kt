@@ -76,7 +76,7 @@ fun QuizScreen(
         topBar = {
             TopHeader(
                 title = if (category!!.isNotBlank()) category else "Any Category",
-                noOfQuestions = noOfQuestions,
+                totalQuestions = noOfQuestions,
                 difficulty = if (difficulty!!.isNotBlank()) difficulty else "Mixed",
                 showBackButton = true,
                 showQuizInfo = true,
