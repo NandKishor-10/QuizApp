@@ -19,15 +19,17 @@ class QuizViewModel(private val getQuizzesUseCases: GetQuizzesUseCases) : ViewMo
     val quizList = _quizList
 
     fun onEvent(event: EventQuizScreen) {
+
         when (event) {
             is EventQuizScreen.GetQuizzes -> {
                 getQuizzes(
                     noOfQuestion = event.noOfQuestion,
                     category = event.category,
                     difficulty = event.difficulty,
-                    type = event.type
+                    type = event.type,
                 )
             }
+
             is EventQuizScreen.SetSelectedOption -> {
                 updateQuizStateList(event.quizStateIndex, event.selectedOption)
             }
@@ -40,7 +42,9 @@ class QuizViewModel(private val getQuizzesUseCases: GetQuizzesUseCases) : ViewMo
         _quizList.value = quizList.value.copy(quizState = updatedQuizStateList)
         Log.d(
             "Answer",
-            "C ${updatedQuizStateList[quizStateIndex].quiz?.correctAnswer} -> S ${updatedQuizStateList[quizStateIndex].shuffledOptions?.get(selectedOption)}"
+            "C ${updatedQuizStateList[quizStateIndex].quiz?.correctAnswer ?: "N/A"} | " +
+                "S ${if (selectedOption != -1) updatedQuizStateList[quizStateIndex].shuffledOptions?.getOrNull(selectedOption) 
+                    else "Unselected"}"
         )
     }
 

@@ -24,13 +24,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
-import com.nandkishor.quizapp.presentation.common.Dimensions
+import androidx.compose.ui.unit.dp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -43,6 +44,7 @@ fun DropdownMenu(
 ) {
     var selectedItem by remember { mutableStateOf(defaultValue) }
     var expanded by remember { mutableStateOf(false) }
+    val screenWidth = LocalConfiguration.current.screenWidthDp.dp
 
     ExposedDropdownMenuBox(
         expanded = expanded,
@@ -65,7 +67,11 @@ fun DropdownMenu(
                 )
             },
             modifier = Modifier
-                .fillMaxWidth()
+                .fillMaxWidth(
+                    if (screenWidth>= 500.dp) 0.5f
+                            else 0.9f
+                )
+                .padding(10.dp)
                 .clip(MaterialTheme.shapes.large)
                 .menuAnchor(type = MenuAnchorType.PrimaryEditable)
                 .semantics{ contentDescription = "Dropdown menu for $label"},
@@ -100,12 +106,12 @@ private fun DropdownMenuPrev() {
     val lists = remember { mutableStateListOf("item 1", "item 2", "item 3", "item 4", "item 5", "item 6", "item 7", "item 8", "item 9", " item 10") }
     Column(
         modifier = Modifier.fillMaxSize()
-            .padding(Dimensions.TwentyFiveDP),
+            .padding(25.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
         DropdownMenu(lists = lists, onDropdownClick = {})
-        Spacer(modifier = Modifier.padding(Dimensions.TwentyFiveDP))
+        Spacer(modifier = Modifier.padding(25.dp))
         DropdownMenu(lists = lists, onDropdownClick = {}, isNecessary = true)
     }
 }

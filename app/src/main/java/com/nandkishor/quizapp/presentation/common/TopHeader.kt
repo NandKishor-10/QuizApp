@@ -1,15 +1,11 @@
 package com.nandkishor.quizapp.presentation.common
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicText
 import androidx.compose.material.icons.Icons
@@ -28,7 +24,6 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -71,8 +66,8 @@ fun TopHeader(
             modifier = Modifier
                 .clip(
                     shape = RoundedCornerShape(
-                        bottomStart = Dimensions.TwentyFiveDP,
-                        bottomEnd = Dimensions.TwentyFiveDP
+                        bottomStart = 25.dp,
+                        bottomEnd = 25.dp
                     )
                 ),
             colors = TopAppBarDefaults.topAppBarColors(
@@ -125,36 +120,35 @@ fun TopHeader(
             scrollBehavior = scrollBehavior
         )
         if (showQuizInfo) {
-            Spacer(Modifier.padding(vertical = Dimensions.FiveDP))
+            Spacer(Modifier.padding(vertical = 5.dp))
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
                     "Questions: $totalQuestions",
-                    modifier = Modifier.padding(start = Dimensions.TenDP)
+                    modifier = Modifier.padding(start = 10.dp)
                 )
                 Text(
                     "Difficulty: $difficulty",
-                    modifier = Modifier.padding(end = Dimensions.TenDP)
+                    modifier = Modifier.padding(end = 10.dp)
                 )
             }
-            Spacer(Modifier.padding(Dimensions.OneDP))
+            Spacer(Modifier.padding(1.dp))
             HorizontalDivider()
         }
     }
 }
 
-//@Preview(showBackground = true)
 @Composable
 fun FractionText(score: Int, totalQuestions: Int) {
     BasicText(
         text = buildAnnotatedString {
-            appendAnnotatedText(score.toString(), BaselineShift(0.5f), 18.sp)
+            appendAnnotatedText(score.toString(), BaselineShift(0.5f), 18.sp, MaterialTheme.colorScheme.onPrimaryContainer)
 
-            appendAnnotatedText("/", BaselineShift(0f), 24.sp, Color.Gray)
+            appendAnnotatedText("/", BaselineShift(0f), 24.sp, MaterialTheme.colorScheme.onPrimaryContainer)
 
-            appendAnnotatedText(totalQuestions.toString(), BaselineShift(-0.3f), 18.sp)
+            appendAnnotatedText(totalQuestions.toString(), BaselineShift(-0.3f), 18.sp, MaterialTheme.colorScheme.onPrimaryContainer)
         }
     )
 }
@@ -185,8 +179,8 @@ private fun HeaderPrevLight() {
     }
 }
 
-//@Preview(showBackground = true, showSystemUi = true)
-//@Composable
-//private fun HeaderPrevDark() {
-//    QuizAppTheme(darkTheme = true) { TopHeader(navController = rememberNavController()) }
-//}
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+private fun HeaderPrevDark() {
+    QuizAppTheme(darkTheme = true) { TopHeader(navController = rememberNavController()) }
+}

@@ -11,10 +11,12 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -24,7 +26,6 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.nandkishor.quizapp.presentation.common.Dimensions
 
 fun Modifier.shimmerEffect(): Modifier = composed {
     val shimmerColors = listOf(
@@ -59,17 +60,40 @@ fun ShimmerQuizInterface(noOfOptions: Int, innerPadding: PaddingValues) {
     Column(
         modifier = Modifier
             .padding(innerPadding)
-            .padding(top = Dimensions.TenDP)
-            .padding(Dimensions.TenDP),
+            .padding(top = 10.dp)
+            .padding(10.dp),
         verticalArrangement = Arrangement.Center
     ) {
-        Box(
-            modifier = Modifier
-                .height(24.dp)
-                .fillMaxWidth(0.8f)
-                .clip(RoundedCornerShape(4.dp))
-                .shimmerEffect()
-        )
+
+        Row {
+            Box(
+                modifier = Modifier
+                    .height(24.dp)
+                    .width(18.dp)
+                    .clip(RoundedCornerShape(4.dp))
+                    .shimmerEffect()
+            )
+            Spacer(Modifier.width(6.dp))
+            Column {
+                repeat(2) {
+                    Box(
+                        modifier = Modifier
+                            .height(24.dp)
+                            .fillMaxWidth()
+                            .clip(RoundedCornerShape(4.dp))
+                            .shimmerEffect()
+                    )
+                    Spacer(Modifier.height(6.dp))
+                }
+                Box(
+                    modifier = Modifier
+                        .height(24.dp)
+                        .fillMaxWidth(0.6f)
+                        .clip(RoundedCornerShape(4.dp))
+                        .shimmerEffect()
+                )
+            }
+        }
 
         Spacer(modifier = Modifier.height(16.dp))
 

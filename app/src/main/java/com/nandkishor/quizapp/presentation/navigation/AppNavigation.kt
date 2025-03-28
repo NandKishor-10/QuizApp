@@ -28,6 +28,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import com.nandkishor.quizapp.presentation.home.HomeScreen
 import com.nandkishor.quizapp.presentation.home.HomeScreenDrawer
+import com.nandkishor.quizapp.presentation.other_screens.ErrorScreen
 import com.nandkishor.quizapp.presentation.other_screens.ReviewScreen
 import com.nandkishor.quizapp.presentation.other_screens.ScoreScreen
 import com.nandkishor.quizapp.presentation.quiz.QuizScreen
@@ -120,6 +121,11 @@ fun AppNavigation() {
                 quizStateJson = args.quizStateJson,
                 navController = navController
             )
+        }
+
+        composable<ErrorScreenArgs>{
+            val args = it.toRoute<ErrorScreenArgs>()
+            ErrorScreen(error = args.error)
         }
 
         composable<ReviewScreenArgs> {

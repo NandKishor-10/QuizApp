@@ -2,7 +2,7 @@ package com.nandkishor.quizapp.presentation.other_screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
@@ -28,9 +27,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import com.nandkishor.quizapp.presentation.common.Dimensions
 import com.nandkishor.quizapp.presentation.common.SecureScreen
 import com.nandkishor.quizapp.presentation.common.TopHeader
 import com.nandkishor.quizapp.presentation.quiz.components.PreviousAndNextButtons
@@ -50,7 +50,6 @@ fun ReviewScreen(
     totalQuestions: Int,
     quizStateJson: String?,
     navController: NavController,
-    modifier: Modifier = Modifier
 ) {
     val systemUiController = rememberSystemUiController()
     systemUiController.setStatusBarColor(
@@ -76,8 +75,7 @@ fun ReviewScreen(
 
         if (quizStateJson.isNullOrEmpty()) {
             ErrorScreen(
-                error = "No Quiz Data Found",
-                innerPadding = innerPadding
+                error = "No Quiz Data Found"
             )
         }
 
@@ -85,6 +83,7 @@ fun ReviewScreen(
 
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
@@ -94,9 +93,8 @@ fun ReviewScreen(
             SecureScreen {
                 HorizontalPager(
                     state = pagerState,
-                    modifier = modifier
-                        .padding(top = Dimensions.TenDP),
-                    verticalAlignment = Alignment.CenterVertically
+                    verticalAlignment = Alignment.Top,
+                    modifier= Modifier.weight(1f)
                 ) { index ->
                     ReviewInterface(
                         qNumber = index + 1,
@@ -108,7 +106,7 @@ fun ReviewScreen(
                 pagerState = pagerState,
                 noOfQuestions = totalQuestions,
                 state = quizState,
-                navController = navController
+                navController = navController,
             )
         }
     }
@@ -123,32 +121,31 @@ fun ReviewInterface(
     val question = characterCodeDecoder(quizState.quiz?.question ?: "")
     val options = quizState.shuffledOptions?.map { option -> characterCodeDecoder(option) }
 
-    Box(
+    Column(
         modifier = modifier
-            .padding(Dimensions.TenDP)
-            .selectableGroup(),
+            .padding(
+                top = 20.dp,
+                bottom = 10.dp,
+                start = 10.dp,
+                end = 10.dp
+            )
+            .verticalScroll(rememberScrollState())
     ) {
-        Column(
-            modifier = modifier
-                .selectableGroup()
-                .verticalScroll(rememberScrollState())
-        ) {
-            // Displaying the question
-            Row {
-                Text(text = "$qNumber. ", style = MaterialTheme.typography.headlineSmall)
-                Text(text = question, style = MaterialTheme.typography.headlineSmall)
-            }
+        // Displaying the question
+        Row {
+            Text(text = "$qNumber. ", style = MaterialTheme.typography.headlineSmall)
+            Text(text = question, style = MaterialTheme.typography.headlineSmall)
+        }
 
-            Spacer(modifier = modifier.padding(vertical = Dimensions.TenDP))
+        Spacer(modifier = Modifier.padding(vertical = 10.dp))
 
-            // Displaying the options
-            options?.forEachIndexed { index, option ->
-                OptionButtonReview(
-                    option = option,
-                    selected = quizState.selectedOptions == index,
-                    selectedOption = quizState.quiz?.correctAnswer ?: ""
-                )
-            }
+        // Displaying the options
+        options?.forEachIndexed { index, option ->
+            OptionButtonReview(
+                option = option,
+                selected = quizState.selectedOptions == index,
+                selectedOption = quizState.quiz?.correctAnswer ?: ""
+            )
         }
     }
 }
@@ -171,7 +168,7 @@ fun OptionButtonReview(
     Row (
         modifier = Modifier
             .fillMaxWidth()
-            .padding(Dimensions.FiveDP)
+            .padding(5.dp)
             .clip(MaterialTheme.shapes.medium)
             .background(
                 when {
@@ -182,9 +179,9 @@ fun OptionButtonReview(
             )
             .border(
                 width = when {
-                    option == selectedOption -> Dimensions.ThreeDP
-                    selected -> Dimensions.TwoDP
-                    else -> Dimensions.OneDP
+                    option == selectedOption -> 3.dp
+                    selected -> 2.dp
+                    else -> 1.dp
                 },
                 color = when {
                     selectedOption == option -> Green
@@ -193,7 +190,7 @@ fun OptionButtonReview(
                 },
                 shape = MaterialTheme.shapes.medium
             )
-            .padding(Dimensions.TenDP),
+            .padding(10.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         RadioButton(
@@ -201,7 +198,7 @@ fun OptionButtonReview(
             onClick = null,
             colors = radioButtonColors
         )
-        Spacer(modifier = Modifier.padding(Dimensions.FiveDP))
+        Spacer(modifier = Modifier.padding(5.dp))
         Text(text = option, style = MaterialTheme.typography.bodyLarge)
         Spacer(Modifier.weight(1f))
         if (selectedOption == option || selected) {
@@ -250,14 +247,14 @@ fun OptionButtonReview(
 //        "Let. say"
 //    )
 //}
-//@Preview(showBackground = true, showSystemUi = true)
-//@Composable
-//private fun ReviewScreenPreview() {
-//    val quizStateJson = "{\"error\":\"\",\"isLoading\":false,\"quizState\":[{\"quiz\":{\"category\":\"Geography\",\"correctAnswer\":\"Wien\",\"difficulty\":\"medium\",\"incorrectAnswers\":[\"Z\\u0026uuml;rich\",\"Frankfurt\",\"Wien\"],\"question\":\"Which city is the capital of Switzerland?\",\"type\":\"multiple\"},\"selectedOptions\":1,\"shuffledOptions\":[\"Wien\",\"Bern\",\"Frankfurt\",\"Z\\u0026uuml;rich\"]},{\"quiz\":{\"category\":\"General Knowledge\",\"correctAnswer\":\"19\",\"difficulty\":\"easy\",\"incorrectAnswers\":[\"20\",\"12\",\"15\"],\"question\":\"On a dartboard, what number is directly opposite No. 1?\",\"type\":\"multiple\"},\"selectedOptions\":0,\"shuffledOptions\":[\"19\",\"20\",\"12\",\"15\"]},{\"quiz\":{\"category\":\"Entertainment: Film\",\"correctAnswer\":\"False\",\"difficulty\":\"easy\",\"incorrectAnswers\":[\"True\"],\"question\":\"The word \\u0026quot;Inception\\u0026quot; came from the 2010 blockbuster hit \\u0026quot;Inception\\u0026quot;.\",\"type\":\"boolean\"},\"selectedOptions\":0,\"shuffledOptions\":[\"False\",\"True\"]}],\"userAnswers\":{\"0\":\"Bern\",\"1\":\"19\",\"2\":\"False\"}}"
-//    ReviewScreen(
-//        score = 2,
-//        totalQuestions = 3,
-//        quizStateJson = quizStateJson,
-//        navController = rememberNavController()
-//    )
-//}
+@Preview(showBackground = true)
+@Composable
+private fun ReviewScreenPreview() {
+    val quizStateJson = "{\"error\":\"\",\"isLoading\":false,\"quizState\":[{\"quiz\":{\"category\":\"Geography\",\"correctAnswer\":\"Wien\",\"difficulty\":\"medium\",\"incorrectAnswers\":[\"Z\\u0026uuml;rich\",\"Frankfurt\",\"Wien\"],\"question\":\"Which city is the capital of Switzerland?\",\"type\":\"multiple\"},\"selectedOptions\":1,\"shuffledOptions\":[\"Wien\",\"Bern\",\"Frankfurt\",\"Z\\u0026uuml;rich\"]},{\"quiz\":{\"category\":\"General Knowledge\",\"correctAnswer\":\"19\",\"difficulty\":\"easy\",\"incorrectAnswers\":[\"20\",\"12\",\"15\"],\"question\":\"On a dartboard, what number is directly opposite No. 1?\",\"type\":\"multiple\"},\"selectedOptions\":0,\"shuffledOptions\":[\"19\",\"20\",\"12\",\"15\"]},{\"quiz\":{\"category\":\"Entertainment: Film\",\"correctAnswer\":\"False\",\"difficulty\":\"easy\",\"incorrectAnswers\":[\"True\"],\"question\":\"The word \\u0026quot;Inception\\u0026quot; came from the 2010 blockbuster hit \\u0026quot;Inception\\u0026quot;.\",\"type\":\"boolean\"},\"selectedOptions\":0,\"shuffledOptions\":[\"False\",\"True\"]}],\"userAnswers\":{\"0\":\"Bern\",\"1\":\"19\",\"2\":\"False\"}}"
+    ReviewScreen(
+        score = 2,
+        totalQuestions = 3,
+        quizStateJson = quizStateJson,
+        navController = rememberNavController()
+    )
+}

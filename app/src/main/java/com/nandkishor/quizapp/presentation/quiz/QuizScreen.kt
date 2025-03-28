@@ -1,6 +1,8 @@
 package com.nandkishor.quizapp.presentation.quiz
 
 import android.util.Log
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -16,12 +18,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import com.nandkishor.quizapp.presentation.common.Dimensions
 import com.nandkishor.quizapp.presentation.common.Lists.categories
 import com.nandkishor.quizapp.presentation.common.SecureScreen
 import com.nandkishor.quizapp.presentation.common.TopHeader
+import com.nandkishor.quizapp.presentation.navigation.ErrorScreenArgs
+import com.nandkishor.quizapp.presentation.navigation.HomescreenWithDrawer
 import com.nandkishor.quizapp.presentation.other_screens.ErrorScreen
 import com.nandkishor.quizapp.presentation.quiz.components.PreviousAndNextButtons
 import com.nandkishor.quizapp.presentation.state.EventQuizScreen
@@ -38,7 +42,6 @@ fun QuizScreen(
     navController: NavController,
     modifier: Modifier = Modifier
 ) {
-
     val systemUiController = rememberSystemUiController()
     systemUiController.setStatusBarColor(
         color = MaterialTheme.colorScheme.primaryContainer
@@ -83,50 +86,54 @@ fun QuizScreen(
                 navController = navController
             )
         }
-//        topBar = {
-//            QuizBar(
-//                category = category.toString(),
-//                noOfQuestions = noOfQuestions,
-//                difficulty = difficulty.toString(),
-//                navController = navController
-//            )
-//        }
     ) { innerPadding ->
-        if (quizFetched(state = state, noOfOptions = noOfOptions, innerPadding = innerPadding)) {
+        if (quizFetched(
+                state = state,
+                noOfOptions = noOfOptions,
+                innerPadding = innerPadding,
+                navController = navController)
+        ) {
             val pagerState = rememberPagerState { state.quizState.size }
 
-            SecureScreen {
-                HorizontalPager(
-                    state = pagerState,
-                    modifier = modifier
-                        .fillMaxSize()
-                        .padding(innerPadding)
-                        .padding(top = Dimensions.TenDP),
-                    verticalAlignment = Alignment.CenterVertically
-                ) { index ->
-                    QuizInterface(
-                        qNumber = index + 1,
-                        quizState = state.quizState[index],
-                        onOptionSelected = { selectedIndex ->
-                            event(EventQuizScreen.SetSelectedOption(index, selectedIndex))
+            Column(
+                verticalArrangement = Arrangement.SpaceBetween,
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.fillMaxSize()
+                    .padding(innerPadding)
+            ) {
+                SecureScreen {
+                    HorizontalPager(
+                        state = pagerState,
+                        verticalAlignment = Alignment.Top,
+                        modifier = modifier.weight(1f),
+                    ) { index ->
+                        QuizInterface(
+                            qNumber = index + 1,
+                            quizState = state.quizState[index],
+                            onOptionSelected = { selectedIndex ->
+                                event(EventQuizScreen.SetSelectedOption(index, selectedIndex))
 
-                            state.userAnswers[index] =
-                                state.quizState[index].shuffledOptions?.get(selectedIndex) ?: ""
-                            Log.d("userAnswers", "${state.userAnswers}")
-                        },
-                        onOptionUnselected = {
-                            event(EventQuizScreen.SetSelectedOption(index, -1))
-                        }
-                    )
+                                state.userAnswers[index] =
+                                    state.quizState[index].shuffledOptions?.get(selectedIndex) ?: ""
+                                Log.d("userAnswers", "${state.userAnswers}")
+                            },
+                            onOptionUnselected = {
+                                event(EventQuizScreen.SetSelectedOption(index, -1))
+                            },
+                            modifier = Modifier
+                                .padding(top = 10.dp)
+                                .padding(10.dp)
+                        )
+                    }
                 }
-            }
 
-            PreviousAndNextButtons(
-                pagerState = pagerState,
-                noOfQuestions = noOfQuestions,
-                state = state,
-                navController = navController
-            )
+                PreviousAndNextButtons(
+                    pagerState = pagerState,
+                    noOfQuestions = noOfQuestions,
+                    state = state,
+                    navController = navController
+                )
+            }
         }
     }
 }
@@ -135,7 +142,8 @@ fun QuizScreen(
 fun quizFetched(
     state: QuizScreenState,
     noOfOptions: Int,
-    innerPadding: PaddingValues
+    innerPadding: PaddingValues,
+    navController: NavController
 ): Boolean {
     return when {
         state.isLoading -> {
@@ -146,7 +154,10 @@ fun quizFetched(
             true
         }
         state.error.isNotEmpty() -> {
-            ErrorScreen(state.error, innerPadding)
+            navController.navigate(ErrorScreenArgs) {
+                popUpTo(HomescreenWithDrawer)
+            }
+            ErrorScreen(state.error)
             false
         }
         else -> {
