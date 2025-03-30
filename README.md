@@ -1,7 +1,11 @@
 ###### _Material Theme based Quiz App_
 ## ****Quiz App – Test Your Knowledge & Learn More!****
 
-[<img src="assets/badge_github.png" alt="Get it on GitHub" height="40">](https://github.com/NandKishor-10/QuizApp/releases/latest)
+<div align="center">
+  <a href="https://github.com/NandKishor-10/QuizApp/releases/latest">
+    <img src="assets/badge_github.png" alt="Get it on GitHub" height="40">
+  </a>
+</div>
 
 Quiz App is an interactive and engaging trivia application designed to challenge your knowledge across multiple categories. Whether you’re preparing for an exam, expanding your general knowledge, or just having fun, this app offers a variety of quizzes to keep you entertained.
 
