@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.DropdownMenuItem
@@ -96,7 +95,6 @@ fun HomeScreenDrawer() {
                         )
                     },
                     modifier = Modifier
-                        .height(48.dp)
                         .clip(MaterialTheme.shapes.medium)
                         .menuAnchor(type = MenuAnchorType.PrimaryEditable),
                     singleLine = true,
