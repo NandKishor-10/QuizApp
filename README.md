@@ -1,5 +1,9 @@
+<div align='center'>
+  
 ###### _Material Theme based Quiz App_
 ## ****Quiz App – Test Your Knowledge & Learn More!****
+</div>
+
 
 <div align="center">
   <a href="https://github.com/NandKishor-10/QuizApp/releases/latest">
