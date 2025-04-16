@@ -1,6 +1,7 @@
 package com.nandkishor.quizapp.presentation.other_screens
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -26,6 +27,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.nandkishor.quizapp.app.DataStoreManager
+import com.nandkishor.quizapp.presentation.common.BannerAdView
 import com.nandkishor.quizapp.presentation.navigation.HomescreenWithDrawer
 import com.nandkishor.quizapp.presentation.navigation.ReviewScreenArgs
 import com.nandkishor.quizapp.util.calculatePercentage
@@ -129,6 +131,13 @@ fun ScoreScreen(
             }) {
                 Text("Review Answers")
             }
+        }
+
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.BottomCenter
+        ) {
+            BannerAdView()
         }
     }
 }

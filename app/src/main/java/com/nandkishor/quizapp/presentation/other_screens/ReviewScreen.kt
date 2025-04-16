@@ -31,6 +31,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.nandkishor.quizapp.presentation.common.BannerAdView
 import com.nandkishor.quizapp.presentation.common.SecureScreen
 import com.nandkishor.quizapp.presentation.common.TopHeader
 import com.nandkishor.quizapp.presentation.quiz.components.PreviousAndNextButtons
@@ -108,6 +109,7 @@ fun ReviewScreen(
                 state = quizState,
                 navController = navController,
             )
+            BannerAdView()
         }
     }
 }

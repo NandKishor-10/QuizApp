@@ -8,6 +8,7 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import com.google.android.gms.ads.MobileAds
 import com.nandkishor.quizapp.presentation.navigation.AppNavigation
 import com.nandkishor.quizapp.ui.theme.QuizAppTheme
 import kotlinx.coroutines.flow.firstOrNull
@@ -29,6 +30,9 @@ class MainActivity : ComponentActivity() {
         installSplashScreen().setKeepOnScreenCondition {
             darkThemeState == null
         }
+
+        MobileAds.initialize(this) {  }
+
         setContent {
             val themePref by dataStoreManager.getThemeFlow().collectAsState(darkThemeState?: "System default")
 

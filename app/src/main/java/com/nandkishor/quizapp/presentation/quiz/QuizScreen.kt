@@ -21,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.nandkishor.quizapp.presentation.common.BannerAdView
 import com.nandkishor.quizapp.presentation.common.Lists.categories
 import com.nandkishor.quizapp.presentation.common.SecureScreen
 import com.nandkishor.quizapp.presentation.common.TopHeader
@@ -133,6 +134,7 @@ fun QuizScreen(
                     state = state,
                     navController = navController
                 )
+                BannerAdView()
             }
         }
     }

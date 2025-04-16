@@ -25,6 +25,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.nandkishor.quizapp.presentation.common.BannerAdView
 import com.nandkishor.quizapp.presentation.common.Lists
 import com.nandkishor.quizapp.presentation.common.TopHeader
 import com.nandkishor.quizapp.presentation.home.components.DropdownMenu
@@ -59,8 +60,7 @@ fun HomeScreen(
             navController = navController
         ) }
     ) { innerPadding ->
-
-        Column (
+        Column(
             verticalArrangement = Arrangement.SpaceEvenly,
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = modifier
@@ -68,10 +68,24 @@ fun HomeScreen(
                 .padding(innerPadding)
                 .verticalScroll(rememberScrollState())
         ) {
-            DropdownMenu(label = "Number of Questions", defaultValue = noOfQuestions, isNecessary = true, lists = Lists.amounts, onDropdownClick = {noOfQuestions = it})
-            DropdownMenu(label = "Select Category", lists = Lists.categories.map{it.first}, onDropdownClick = {category = it})
-            DropdownMenu(label = "Select Difficulty", lists = Lists.difficulties, onDropdownClick = {difficulty = it})
-            DropdownMenu(label = "Select Type", lists = Lists.type, onDropdownClick = {type = it})
+            DropdownMenu(
+                label = "Number of Questions",
+                defaultValue = noOfQuestions,
+                isNecessary = true,
+                lists = Lists.amounts,
+                onDropdownClick = { noOfQuestions = it })
+            DropdownMenu(
+                label = "Select Category",
+                lists = Lists.categories.map { it.first },
+                onDropdownClick = { category = it })
+            DropdownMenu(
+                label = "Select Difficulty",
+                lists = Lists.difficulties,
+                onDropdownClick = { difficulty = it })
+            DropdownMenu(
+                label = "Select Type",
+                lists = Lists.type,
+                onDropdownClick = { type = it })
 
             HorizontalDivider(color = Color.Transparent)
             HorizontalDivider(color = Color.Transparent)
@@ -83,6 +97,7 @@ fun HomeScreen(
                 type = type,
                 navController = navController
             )
+            BannerAdView()
         }
     }
     Box(modifier = modifier.then(boxModifier))

@@ -35,3 +35,8 @@ object Lists {
 
     val type = listOf("Multiple Choice", "True/False")
 }
+
+object AdService {
+    val appId = "ca-app-pub-3940256099942544~3347511713"
+    val adId = "ca-app-pub-3940256099942544/6300978111"
+}
